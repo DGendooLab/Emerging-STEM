@@ -1,7 +1,14 @@
 from scrape import *
 import dash
-from dash import dcc, html
+from dash import dcc, html, dash_table
 import dash_bootstrap_components as dbc
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+
+######################################################################################################################
+# Creating app instance and designing layout #
+######################################################################################################################
+
 default_parameters = {
     'academic_discipline': 'computer-science',
     'hours_type': 'full-time',
@@ -55,13 +62,13 @@ app.layout = html.Div(children=[
             ], className="four columns"),
             html.Div(children=[
                 html.Label('Funding Type'),
-                dcc.Input(id='funding_type',
-                          value=default_parameters['funding_type'], type='text')
+                dcc.Dropdown(['eu-students', 'international-students', 'self-funded-students',
+                             'uk-students'], value=default_parameters['funding_type'], id="funding_type"),
             ], className="four columns"),
             html.Div(children=[
                 html.Label('Hours Type'),
-                dcc.Input(id='hours_type',
-                          value=default_parameters['hours_type'], type='text')
+                dcc.Dropdown(['full-time', 'part-time'],
+                             value=default_parameters['hours_type'], id="hours_type"),
             ], className="four columns"),
         ], className="row", style={'padding': 10}),
         html.Div(children=[
@@ -97,6 +104,111 @@ app.layout = html.Div(children=[
 ######################################################################################################################
 # Callback Functions #
 ######################################################################################################################
+# Callback to update results table upon button click, if button isn't disabled
+
+
+@app.callback(
+    [Output("results", "children"),
+     Output('trigger', 'children')],
+    [Input("find_phds", "n_clicks")],
+    [State("academic_discipline", "value"),
+     State("hours_type", "value"),
+     State("funding_type", "value"),
+     State("ordered_keywords", "value"),
+     State("exclude_keywords", "value")]
+)
+def update_results(n_clicks, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords):
+    # Don't bother updating if the page just opened
+    if n_clicks == 0 or n_clicks is None:
+        raise PreventUpdate
+
+    # Grab input
+    ordered_keywords = [x.strip() for x in ordered_keywords.split(",")]
+    exclude_keywords = [x.strip() for x in exclude_keywords.split(",")]
+
+    # Scraping parameters
+    parameters = {
+        'academic_discipline': academic_discipline,
+        'hours_type': hours_type,
+        'funding_type': funding_type,
+        'ordered_keywords': ordered_keywords,
+        'exclude_keywords': exclude_keywords,
+    }
+    print(parameters)
+
+    # Scrape based on parameters given
+    df = scraper.get_scrape(parameters)
+    global global_df
+    global_df = df
+
+    # Column for data-table
+    columns = [
+        {"name": i, "id": i} for i in df.columns
+    ]
+
+    # Convert data to list of dictionaries
+    data = df.iloc[0:10, :].to_dict(orient='records')
+
+    # Results table div
+    results_div = html.Div(className="row", children=[
+        html.Div(className="twelve columns", children=[
+            dash_table.DataTable(id="data_output",
+                                 style_as_list_view=True,
+                                 style_header={
+                                     'backgroundColor': 'white',
+                                     'fontWeight': 'bold'
+                                 },
+                                 style_cell={
+                                     'overflow': 'hidden',
+                                     'textOverflow': 'ellipsis',
+                                                     'minWidth': '0px',
+                                                     'maxWidth': '180px'
+                                 },
+                                 data=data,
+                                 columns=columns
+                                 )])])
+    # Div to output to results parent
+    output_div = html.Div(className="row", children=[
+        dcc.Markdown('''
+        
+        ### Results: 
+                        
+        '''),
+        results_div,
+        html.Br(),
+        html.A(html.Button("Download Full Data as Excel File", className="button button-primary"),
+               id='download-link',
+               href="/download_excel/"
+               )
+    ])
+
+    # Return output div as well as an output value to trigger div to start trigger callback
+    return ([output_div], 1)
+
+# Callback which checks if button has been triggered already or not. Disables it if so.
+
+
+@app.callback(
+    Output('find_phds', 'disabled'),
+    [Input('find_phds', 'n_clicks'),
+     Input('trigger', 'children')])
+def trigger_function(n_clicks, trigger):
+
+    # Grab the id of the element that triggered the callback
+    context = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+
+    # If the button triggered the function
+    if context == 'find_phds':
+
+        # Prevent false disabling at page load
+        if n_clicks is None:
+            return False
+        elif n_clicks > 0:
+            return True
+        else:
+            return False
+    else:
+        return False    # If scrape completes and signals trigger again
 
 
 if __name__ == "__main__":
