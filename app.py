@@ -40,6 +40,39 @@ You can then download the full dataframe as an excel sheet for convenience.
 scraper = Scrape()
 
 # Define dropdown options
+academic_discipline_options = [
+    {"label": "Agriculture, Food & Veterinary",
+        "value": "agriculture-food-and-veterinary"},
+    {"label": "Architecture, Building & Planning",
+        "value": "architecture-building-and-planning"},
+    {"label": "Biological Sciences", "value": "biological-sciences"},
+    {"label": "Business & Management Studies",
+        "value": "business-and-management-studies"},
+    {"label": "Computer Sciences", "value": "computer-sciences"},
+    {"label": "Creative Arts & Design", "value": "creative-arts-and-design"},
+    {"label": "Economics", "value": "economics"},
+    {"label": "Education Studies", "value": "education-studies-inc-tefl"},
+    {"label": "Engineering & Technology", "value": "engineering-and-technology"},
+    {"label": "Health & Medical", "value": "health-and-medical"},
+    {"label": "Historical & Philosophical Studies",
+        "value": "historical-and-philosophical-studies"},
+    {"label": "Information Management & Librarianship",
+        "value": "information-management-and-librarianship"},
+    {"label": "Languages, Literature & Culture",
+        "value": "languages-literature-and-culture"},
+    {"label": "Law", "value": "law"},
+    {"label": "Mathematics & Statistics", "value": "mathematics-and-statistics"},
+    {"label": "Media & Communications", "value": "media-and-communications"},
+    {"label": "Physical & Environmental Sciences",
+        "value": "physical-and-environmental-sciences"},
+    {"label": "Politics & Government", "value": "politics-and-government"},
+    {"label": "Psychology", "value": "psychology"},
+    {"label": "Social Sciences & Social Care",
+        "value": "social-sciences-and-social-care"},
+    {"label": "Sport & Leisure", "value": "sport-and-leisure"}
+]
+
+
 funding_type_options = [
     {"label": "EU Students", "value": "eu-students"},
     {"label": "International Students", "value": "international-students"},
@@ -66,8 +99,10 @@ app.layout = html.Div(children=[
         html.Div(children=[
             html.Div(children=[
                 html.Label('Academic Discipline'),
-                dcc.Input(id='academic_discipline',
-                          value=default_parameters['academic_discipline'], type='text')
+                dcc.Dropdown(options=academic_discipline_options,
+                             value=default_parameters['academic_discipline'], id="academic_discipline"),
+                # dcc.Input(id='academic_discipline',
+                #           value=default_parameters['academic_discipline'], type='text')
             ], className="four columns"),
             html.Div(children=[
                 html.Label('Funding Type'),

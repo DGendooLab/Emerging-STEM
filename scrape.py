@@ -27,10 +27,11 @@ class Scrape:
                 title_keywords_present.append(keyword)
 
         rating = rating / sum(range(1, total_keywords + 1))
+        rating = round(rating, 3)  # Round up to 3 decimal places
 
         for keyword in exclude_keywords:
             if keyword in data['title']:
-                rating = 0
+                rating = -1
                 break
 
         # Convert title_keywords_present to string representation
@@ -61,9 +62,9 @@ class Scrape:
                 "div.j-search-result__text a")]
             urls = ["https://www.jobs.ac.uk" + url["href"]
                     for url in page.select("div.j-search-result__text a")]
-            departments = [department.get_text(
-                strip=True) for department in page.select("div.j-search-result__department")]
-            departments = departments if departments else [None]
+            # departments = [department.get_text(
+            #     strip=True) for department in page.select("div.j-search-result__department")]
+            # departments = departments if departments else [None]
             employers = [employer.get_text(strip=True) for employer in page.select(
                 "div.j-search-result__employer b")]
             employers = employers if employers else [None]
@@ -79,7 +80,7 @@ class Scrape:
             page_data = pd.DataFrame({
                 "title": titles,
                 "employer": employers,
-                "department": departments,
+                # "department": departments,
                 "salary": salary,
                 "location": locations,
                 "post_date": post_dates,
@@ -99,10 +100,9 @@ class Scrape:
         rating_data = rating_data.rename(
             columns={0: 'rating', 1: 'title_keywords_present'})
         output_data = pd.concat([phd_data, rating_data], axis=1)
-        return output_data
 
-    def download_csv(self, parameters, filename):
-        data = self.get_scrape(parameters)
-        csv_string = data.to_csv(index=False, encoding='utf-8-sig')
-        with open(filename, 'w', encoding='utf-8-sig') as file:
-            file.write(csv_string)
+        # Sort df by rating
+        output_data = output_data.sort_values(
+            by='rating', ascending=False).reset_index(drop=True)
+
+        return output_data
