@@ -14,24 +14,20 @@ default_parameters = {
 }
 
 heading = '''
-## EmergingSTEM-PhD
-### How to use me:
-
 You provide a set of standard input parameters: 
-- **academic_discipline**
-- **hours_type**
-- **funding_type**
+- **Academic Discipline**
+- **Hours Type**
+- **Funding Type**
 
-in addition to two non-standard parameters: 
+In addition to two non-standard parameters: 
 - **Keywords in Title**: A list of keywords to search for in a title which, if matched, increase the normalized rating. 
 - **Keywords to Exclude**: A list of keywords to search for in a title which renders the rating of that job zero. E.g., if you really hate Data discipline, you would include: "Data"
 
 The web scraper searches through all the PhD listings with those parameters and returns all the listings ordered by the "rating" metric based on the ordered list of keywords.
 
-You can then download the full dataframe as an excel sheet for convenience. 
+You can then download the full dataframe as a CSV file for convenience. 
 
 **NOTE: Parsing through all job descriptions can take some time.**
-
 '''
 
 # Creating app instance and designing layout #
@@ -72,7 +68,6 @@ academic_discipline_options = [
     {"label": "Sport & Leisure", "value": "sport-and-leisure"}
 ]
 
-
 funding_type_options = [
     {"label": "EU Students", "value": "eu-students"},
     {"label": "International Students", "value": "international-students"},
@@ -86,53 +81,52 @@ hours_type_options = [
 ]
 
 # Set external stylesheets
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = [dbc.themes.FLATLY]
 
 # Create app
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # Define app layout
 app.layout = html.Div(children=[
-    dcc.Markdown(heading),
-    dbc.Progress(id="progress", value=0, max=100, striped=True, animated=True),
-    html.Div(children=[
-        html.Div(children=[
-            html.Div(children=[
+    dbc.Container(children=[
+        html.H2(children='EmergingSTEM-PhD'),
+        html.H4(children='How to use me:'),
+        dcc.Markdown(children=heading),
+        dbc.Row(children=[
+            dbc.Col(children=[
                 html.Label('Academic Discipline'),
                 dcc.Dropdown(options=academic_discipline_options,
                              value=default_parameters['academic_discipline'], id="academic_discipline"),
-                # dcc.Input(id='academic_discipline',
-                #           value=default_parameters['academic_discipline'], type='text')
-            ], className="four columns"),
-            html.Div(children=[
+            ], width=4, style={'padding': '6px'}),
+            dbc.Col(children=[
                 html.Label('Funding Type'),
                 dcc.Dropdown(options=funding_type_options,
                              value=default_parameters['funding_type'], id="funding_type"),
-            ], className="four columns"),
-            html.Div(children=[
+            ], width=4, style={'padding': '6px'}),
+            dbc.Col(children=[
                 html.Label('Hours Type'),
                 dcc.Dropdown(options=hours_type_options,
                              value=default_parameters['hours_type'], id="hours_type"),
-            ], className="four columns"),
-        ], className="row", style={'padding': 10}),
-        html.Div(children=[
-            html.Div(children=[
+            ], width=4, style={'padding': '6px'}),
+        ]),
+        dbc.Row(children=[
+            dbc.Col(children=[
                 html.Label('Keywords in Title'),
                 dcc.Input(id='ordered_keywords',
-                          value=default_parameters['ordered_keywords'], type='text')
-            ], className="four columns"),
-            html.Div(children=[
+                          value=default_parameters['ordered_keywords'], type='text'),
+            ], width=4, style={'padding': '6px'}),
+            dbc.Col(children=[
                 html.Label('Keywords to Exclude'),
                 dcc.Input(id='exclude_keywords',
-                          value=default_parameters['exclude_keywords'], type='text')
-            ], className="four columns"),
-        ], className="row", style={'padding': 10}),
-        html.Div(children=[
-            html.Div(children=[
-                html.Button('Find PhDs', id='find_phds',
-                            className="button button-primary")
-            ], className="twelve columns"),
-        ], className="row", style={'padding': 10}),
+                          value=default_parameters['exclude_keywords'], type='text'),
+            ], width=4, style={'padding': '6px'}),
+        ]),
+        dbc.Row(children=[
+            dbc.Col(children=[
+                dbc.Button('Find PhDs', id='find_phds',
+                           className="button button-primary"),
+            ], width=12, style={'padding': '10px'}),
+        ]),
         dcc.Loading(
             id="loading",
             children=[
@@ -143,6 +137,7 @@ app.layout = html.Div(children=[
         html.Div(id='trigger', children=0, style=dict(display='none'))
     ])
 ])
+
 
 # Callback to update results table upon button click, if button isn't disabled
 
@@ -187,31 +182,27 @@ def update_results(n_clicks, academic_discipline, hours_type, funding_type, orde
     results_div = html.Div(className="row", children=[
         html.Div(className="twelve columns", children=[
             dash_table.DataTable(
+                data=df.to_dict('records'),
+                columns=[{'id': c, 'name': c} for c in df.columns],
+                style_table={'overflowX': 'auto'},
                 id="data_output",
-                style_as_list_view=True,
-                style_header={
-                    'backgroundColor': 'white',
-                    'fontWeight': 'bold'
-                },
-                style_cell={
-                    'overflow': 'hidden',
-                    'textOverflow': 'ellipsis',
-                    'minWidth': '0px',
-                    'maxWidth': '180px'
-                },
-                data=data,
-                columns=columns
+
+                style_cell={'textAlign': 'left', 'maxWidth': '200px'},
+                style_data_conditional=[
+                    {
+                        'if': {
+                            'column_id': 'title',
+                        },
+                        'maxWidth': '400px',
+                    },]
             )
+
         ])
     ])
 
     # Div to output to results parent
     output_div = html.Div(className="row", children=[
-        dcc.Markdown('''
-        
-        ### Results: 
-                        
-        '''),
+        html.H3('Results:'),
         results_div,
         html.Br(),
         html.A(
