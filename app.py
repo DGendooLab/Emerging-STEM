@@ -4,6 +4,8 @@ from dash import dcc, html, dash_table
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
+import io
+import csv
 
 default_parameters = {
     'academic_discipline': 'computer-sciences',
@@ -30,12 +32,9 @@ You can then download the full dataframe as a CSV file for convenience.
 **NOTE: Parsing through all job descriptions can take some time.**
 '''
 
-# Creating app instance and designing layout #
-
 # Create scrape instance
 scraper = Scrape()
 
-# Define dropdown options
 academic_discipline_options = [
     {"label": "Agriculture, Food & Veterinary",
         "value": "agriculture-food-and-veterinary"},
@@ -140,21 +139,18 @@ app.layout = html.Div(children=[
 ])
 
 
-# Callback to update results table upon button click, if button isn't disabled
-
-
 @app.callback(
     Output("results", "children"),
-    [Input("find_phds", "n_clicks")],
+    [Input("find_phds", "n_clicks"), Input('trigger', 'children')],
     [State("academic_discipline", "value"),
      State("hours_type", "value"),
      State("funding_type", "value"),
      State("ordered_keywords", "value"),
      State("exclude_keywords", "value")]
 )
-def update_results(n_clicks, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords):
+def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords):
     # Don't bother updating if the page just opened or the button is disabled
-    if n_clicks is None or n_clicks == 0:
+    if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
 
     # Grab input
@@ -173,11 +169,14 @@ def update_results(n_clicks, academic_discipline, hours_type, funding_type, orde
     # Scrape based on parameters given
     df = scraper.get_scrape(parameters)
 
-    # Column for data-table
-    columns = [{"name": i, "id": i} for i in df.columns]
-
-    # Convert data to list of dictionaries
-    data = df.to_dict(orient='records')
+    # Create a buffer to store CSV data
+    csv_buffer = io.StringIO()
+    # Convert DataFrame to CSV format
+    df.to_csv(csv_buffer, index=False, quoting=csv.QUOTE_NONNUMERIC)
+    # Get the CSV data as a string
+    csv_string = csv_buffer.getvalue()
+    # Close the buffer
+    csv_buffer.close()
 
     # Results table div
     results_div = html.Div(className="row", children=[
@@ -187,7 +186,6 @@ def update_results(n_clicks, academic_discipline, hours_type, funding_type, orde
                 columns=[{'id': c, 'name': c} for c in df.columns],
                 style_table={'overflowX': 'auto'},
                 id="data_output",
-
                 style_cell={'textAlign': 'left', 'maxWidth': '200px'},
                 style_data_conditional=[
                     {
@@ -195,9 +193,9 @@ def update_results(n_clicks, academic_discipline, hours_type, funding_type, orde
                             'column_id': 'title',
                         },
                         'maxWidth': '400px',
-                    },]
+                    },
+                ]
             )
-
         ])
     ])
 
@@ -210,20 +208,18 @@ def update_results(n_clicks, academic_discipline, hours_type, funding_type, orde
             html.Button("Download Full Data as CSV File",
                         className="button button-primary"),
             id='download-link',
-            href="/",
+            href="data:text/csv;charset=utf-8," + csv_string,
             download="phd_data.csv"
         )
     ])
 
     return output_div
 
-# Callback which checks if button has been triggered already or not. Disables it if so.
-
 
 @app.callback(
-    Output('find_phds', 'disabled'),
-    [Input('find_phds', 'n_clicks'),
-     Input('trigger', 'children')]
+    Output('trigger', 'children'),
+    [Input('find_phds', 'n_clicks')],
+    [State('trigger', 'children')]
 )
 def trigger_function(n_clicks, trigger):
     # Grab the id of the element that triggered the callback
@@ -232,13 +228,13 @@ def trigger_function(n_clicks, trigger):
     # If the button triggered the function
     if context == 'find_phds':
         if n_clicks is None:
-            return False
+            return trigger + 1 if trigger else 1
         elif n_clicks > 0:
-            return True
+            return trigger + 1 if trigger else 1
         else:
-            return False
+            return trigger
     else:
-        return False  # If scrape completes and signals trigger again
+        return trigger  # If scrape completes and signals trigger again
 
 
 if __name__ == "__main__":
