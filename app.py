@@ -4,12 +4,6 @@ from dash import dcc, html, dash_table
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-import io
-import pandas as pd
-import base64
-
-# Hacky way of allowing downloading
-global_df = None
 
 default_parameters = {
     'academic_discipline': 'computer-sciences',
@@ -40,10 +34,7 @@ You can then download the full dataframe as an excel sheet for convenience.
 
 '''
 
-######################################################################################################################
 # Creating app instance and designing layout #
-######################################################################################################################
-
 
 # Create scrape instance
 scraper = Scrape()
@@ -118,14 +109,11 @@ app.layout = html.Div(children=[
     ])
 ])
 
-######################################################################################################################
-# Callback Functions #
-######################################################################################################################
 # Callback to update results table upon button click, if button isn't disabled
 
 
 @app.callback(
-    [Output("results", "children"), Output('trigger', 'children')],
+    Output("results", "children"),
     [Input("find_phds", "n_clicks")],
     [State("academic_discipline", "value"),
      State("hours_type", "value"),
@@ -134,8 +122,8 @@ app.layout = html.Div(children=[
      State("exclude_keywords", "value")]
 )
 def update_results(n_clicks, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords):
-    # Don't bother updating if the page just opened
-    if n_clicks is None:
+    # Don't bother updating if the page just opened or the button is disabled
+    if n_clicks is None or n_clicks == 0:
         raise PreventUpdate
 
     # Grab input
@@ -153,64 +141,64 @@ def update_results(n_clicks, academic_discipline, hours_type, funding_type, orde
 
     # Scrape based on parameters given
     df = scraper.get_scrape(parameters)
-    global_df = df
 
     # Column for data-table
-    columns = [{"name": str(i), "id": str(i)} for i in df.columns]
+    columns = [{"name": i, "id": i} for i in df.columns]
 
     # Convert data to list of dictionaries
     data = df.to_dict(orient='records')
 
     # Results table div
-    results_div = html.Div(className="container", children=[
-        html.Div(className="row", children=[
-            html.Div(className="twelve columns", children=[
-                dash_table.DataTable(
-                    id="data_output",
-                    style_as_list_view=True,
-                    style_header={
-                        'backgroundColor': 'white',
-                        'fontWeight': 'bold'
-                    },
-                    style_cell={
-                        'overflow': 'hidden',
-                        'textOverflow': 'ellipsis',
-                        'minWidth': '0px',
-                        'maxWidth': '180px'
-                    },
-                    data=data,
-                    columns=columns
-                )
-            ])
-        ]),
-        html.Br(),
-        html.A(
-            html.Button("Download Full Data as Excel File",
-                        className="button button-primary"),
-            id='download-link',
-            href="/download_excel/",
-            download="phd_data.xlsx"
-        )
+    results_div = html.Div(className="row", children=[
+        html.Div(className="twelve columns", children=[
+            dash_table.DataTable(
+                id="data_output",
+                style_as_list_view=True,
+                style_header={
+                    'backgroundColor': 'white',
+                    'fontWeight': 'bold'
+                },
+                style_cell={
+                    'overflow': 'hidden',
+                    'textOverflow': 'ellipsis',
+                    'minWidth': '0px',
+                    'maxWidth': '180px'
+                },
+                data=data,
+                columns=columns
+            )
+        ])
     ])
 
     # Div to output to results parent
     output_div = html.Div(className="row", children=[
         dcc.Markdown('''
+        
         ### Results: 
+                        
         '''),
-        results_div
+        results_div,
+        html.Br(),
+        html.A(
+            html.Button("Download Full Data as CSV File",
+                        className="button button-primary"),
+            id='download-link',
+            href="/",
+            download="phd_data.csv"
+        )
     ])
 
-    # Return output div as well as an output value to trigger div to start trigger callback
-    return [output_div], 1
-
+    return output_div
 
 # Callback which checks if button has been triggered already or not. Disables it if so.
+
+
 @app.callback(
     Output('find_phds', 'disabled'),
-    [Input('find_phds', 'n_clicks'), Input('trigger', 'children')]
+    [Input('find_phds', 'n_clicks'),
+     Input('trigger', 'children')]
 )
-def trigger_function(n_clicks):
+def trigger_function(n_clicks, trigger):
     # Grab the id of the element that triggered the callback
     context = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
 
@@ -226,23 +214,5 @@ def trigger_function(n_clicks):
         return False  # If scrape completes and signals trigger again
 
 
-# Callback to handle the download link
-@app.callback(Output("download-link", "href"), [Input("download-link", "pathname")])
-def download_excel(pathname):
-    if pathname == "/download_excel/":
-        # Create Excel file in memory
-        output = io.BytesIO()
-        writer = pd.ExcelWriter(output, engine="xlsxwriter")
-        global_df.to_excel(writer, index=False)
-        writer.save()
-        output.seek(0)
-
-        # Return the download link
-        return f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{base64.b64encode(output.getvalue()).decode()}"
-    else:
-        raise PreventUpdate
-
-
 if __name__ == "__main__":
-    server = app.server
     app.run_server(debug=True)

@@ -33,7 +33,10 @@ class Scrape:
                 rating = 0
                 break
 
-        return rating, title_keywords_present
+        # Convert title_keywords_present to string representation
+        title_keywords_present_str = ", ".join(title_keywords_present)
+
+        return rating, title_keywords_present_str
 
     @staticmethod
     def get_phd_details(url):
@@ -93,10 +96,13 @@ class Scrape:
         phd_data = self.get_phd_details(base_url)
         rating_data = phd_data.apply(lambda row: self.rate_phd(
             row, parameters), axis=1, result_type='expand')
+        rating_data = rating_data.rename(
+            columns={0: 'rating', 1: 'title_keywords_present'})
         output_data = pd.concat([phd_data, rating_data], axis=1)
-        output_data.to_csv("temp.csv")
         return output_data
 
-    @staticmethod
-    def output_excel(df, output_path):
-        df.to_excel(output_path, index=False)
+    def download_csv(self, parameters, filename):
+        data = self.get_scrape(parameters)
+        csv_string = data.to_csv(index=False, encoding='utf-8-sig')
+        with open(filename, 'w', encoding='utf-8-sig') as file:
+            file.write(csv_string)
