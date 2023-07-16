@@ -27,7 +27,7 @@ class Scrape:
                 title_keywords_present.append(keyword)
 
         rating = rating / sum(range(1, total_keywords + 1))
-        rating = round(rating, 3)  # Round up to 3 decimal places
+        rating = round(rating, 3)  # Round up
 
         for keyword in exclude_keywords:
             if keyword in data['title']:
@@ -57,14 +57,13 @@ class Scrape:
             page = BeautifulSoup(requests.get(page_url).content, "html.parser")
 
             # Extract data from the page
-            # Update the code to extract values for each column from the parsed HTML page
             titles = [title.get_text(strip=True) for title in page.select(
                 "div.j-search-result__text a")]
             urls = ["https://www.jobs.ac.uk" + url["href"]
                     for url in page.select("div.j-search-result__text a")]
-            # departments = [department.get_text(
-            #     strip=True) for department in page.select("div.j-search-result__department")]
-            # departments = departments if departments else [None]
+            departments = [department.get_text(
+                strip=True) for department in page.select("div.j-search-result__department")]
+            departments = departments if departments else [None]
             employers = [employer.get_text(strip=True) for employer in page.select(
                 "div.j-search-result__employer b")]
             employers = employers if employers else [None]
@@ -80,7 +79,7 @@ class Scrape:
             page_data = pd.DataFrame({
                 "title": titles,
                 "employer": employers,
-                # "department": departments,
+                "department": departments,
                 "salary": salary,
                 "location": locations,
                 "post_date": post_dates,

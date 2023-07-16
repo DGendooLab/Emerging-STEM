@@ -9,77 +9,18 @@ import csv
 import base64
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+from constants import (
+    default_parameters,
+    heading,
+    academic_discipline_options,
+    funding_type_options,
+    hours_type_options
+)
 
-default_parameters = {
-    'academic_discipline': 'computer-sciences',
-    'hours_type': 'full-time',
-    'funding_type': 'international-students',
-    'ordered_keywords': "Artificial, Machine, Robot, Automation, Simulation",
-    'exclude_keywords': "Data",
-}
-
-heading = '''
-## Welcome to EmergingSTEM-PhD
-
-**How to use the app:**
-
-- Select your preferred academic discipline, hours type, and funding type from the dropdown menus.
-- Enter keywords in the "Keywords in Title" field to filter the results based on specific criteria.
-- Use the "Keywords to Exclude" field to exclude certain keywords from the results.
-- Adjust the range slider to refine the search based on the relevance of the keywords.
-- Click the "Find PhDs" button to retrieve the matching PhD listings.
-- Explore the results, download the data, and generate a word cloud for the titles.
-
-**Note: Parsing through all job descriptions can take some time.**
-
-'''
 
 # Create scrape instance
 scraper = Scrape()
 
-academic_discipline_options = [
-    {"label": "Agriculture, Food & Veterinary",
-        "value": "agriculture-food-and-veterinary"},
-    {"label": "Architecture, Building & Planning",
-        "value": "architecture-building-and-planning"},
-    {"label": "Biological Sciences", "value": "biological-sciences"},
-    {"label": "Business & Management Studies",
-        "value": "business-and-management-studies"},
-    {"label": "Computer Sciences", "value": "computer-sciences"},
-    {"label": "Creative Arts & Design", "value": "creative-arts-and-design"},
-    {"label": "Economics", "value": "economics"},
-    {"label": "Education Studies", "value": "education-studies-inc-tefl"},
-    {"label": "Engineering & Technology", "value": "engineering-and-technology"},
-    {"label": "Health & Medical", "value": "health-and-medical"},
-    {"label": "Historical & Philosophical Studies",
-        "value": "historical-and-philosophical-studies"},
-    {"label": "Information Management & Librarianship",
-        "value": "information-management-and-librarianship"},
-    {"label": "Languages, Literature & Culture",
-        "value": "languages-literature-and-culture"},
-    {"label": "Law", "value": "law"},
-    {"label": "Mathematics & Statistics", "value": "mathematics-and-statistics"},
-    {"label": "Media & Communications", "value": "media-and-communications"},
-    {"label": "Physical & Environmental Sciences",
-        "value": "physical-and-environmental-sciences"},
-    {"label": "Politics & Government", "value": "politics-and-government"},
-    {"label": "Psychology", "value": "psychology"},
-    {"label": "Social Sciences & Social Care",
-        "value": "social-sciences-and-social-care"},
-    {"label": "Sport & Leisure", "value": "sport-and-leisure"}
-]
-
-funding_type_options = [
-    {"label": "EU Students", "value": "eu-students"},
-    {"label": "International Students", "value": "international-students"},
-    {"label": "Self-funded Students", "value": "self-funded-students"},
-    {"label": "UK Students", "value": "uk-students"},
-]
-
-hours_type_options = [
-    {"label": "Full-time", "value": "full-time"},
-    {"label": "Part-time", "value": "part-time"},
-]
 
 # Set external stylesheets
 external_stylesheets = [dbc.themes.LUMEN]
@@ -188,7 +129,7 @@ def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_t
     # Scrape based on parameters given
     df = scraper.get_scrape(parameters)
 
-    # filter data based on output_range value
+    # Filter data based on output_range value
     if range_slider == [0, 0]:
         df = df[df['rating'] > 0]
     elif range_slider == [0, 1]:
@@ -218,8 +159,8 @@ def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_t
                 id="data_output",
                 style_cell={
                     'textAlign': 'left',
-                    'fontSize': '14px',  # Adjust the font size as needed
-                    'fontFamily': 'Arial, sans-serif',  # Specify the font family
+                    'fontSize': '14px',
+                    'fontFamily': 'Arial, sans-serif',
                     'padding': '8px',  # Add padding for cell content
                 },
                 style_data={

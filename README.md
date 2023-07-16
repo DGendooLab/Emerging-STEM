@@ -1,8 +1,8 @@
-# EmergingSTEM-PhD
+# Emerging-STEM
 
 live version: https://emergingstem.onrender.com/
 
-EmergingSTEM-PhD, a web app that allows you to search and explore PhD listings based on academic discipline, funding type, and other criteria
+Emerging-STEM-PhD, a web app that allows you to search and explore PhD listings based on academic discipline, funding type, and other criteria
 
 ## Usage
 
