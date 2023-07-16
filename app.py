@@ -6,6 +6,9 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import io
 import csv
+import base64
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 default_parameters = {
     'academic_discipline': 'computer-sciences',
@@ -114,12 +117,28 @@ app.layout = html.Div(children=[
                 html.Label('Keywords in Title'),
                 dcc.Input(id='ordered_keywords',
                           value=default_parameters['ordered_keywords'], type='text'),
-            ], width=4, style={'padding': '6px'}),
+            ], width=6, style={'padding': '6px'}),
             dbc.Col(children=[
                 html.Label('Keywords to Exclude'),
                 dcc.Input(id='exclude_keywords',
                           value=default_parameters['exclude_keywords'], type='text'),
-            ], width=4, style={'padding': '6px'}),
+            ], width=6, style={'padding': '6px'}),
+        ]),
+        dbc.Row(children=[
+            dbc.Col(children=[
+                dcc.RangeSlider(
+                    min=0,
+                    max=2,
+                    step=1,
+                    value=[0, 1],
+                    marks={
+                        0: {'label': 'with include keyword'},
+                        1: {'label': 'without exclude or include keyword'},
+                        2: {'label': 'with exclude keyword'}
+                    },
+                    id='range_slider'
+                ),
+            ], width=6, style={'padding': '10px'}),
         ]),
         dbc.Row(children=[
             dbc.Col(children=[
@@ -134,7 +153,8 @@ app.layout = html.Div(children=[
             ],
             type="circle",
         ),
-        html.Div(id='trigger', children=0, style=dict(display='none'))
+        html.Div(id='trigger', children=0, style=dict(display='none')),
+        html.Div(id='word-cloud')
     ])
 ])
 
@@ -146,9 +166,11 @@ app.layout = html.Div(children=[
      State("hours_type", "value"),
      State("funding_type", "value"),
      State("ordered_keywords", "value"),
-     State("exclude_keywords", "value")]
+     State("exclude_keywords", "value"),
+     State("range_slider", "value")
+     ]
 )
-def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords):
+def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords, range_slider):
     # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
@@ -168,6 +190,18 @@ def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_t
 
     # Scrape based on parameters given
     df = scraper.get_scrape(parameters)
+
+    # filter data based on output_range value
+    if range_slider == [0, 0]:
+        df = df[df['rating'] > 0]
+    elif range_slider == [0, 1]:
+        df = df[df['rating'] >= 0]
+    elif range_slider == [1, 1]:
+        df = df[df['rating'] == 0]
+    elif range_slider == [0, 2]:
+        df = df
+    elif range_slider == [2, 2]:
+        df = df[df['rating'] == -1]
 
     # Create a buffer to store CSV data
     csv_buffer = io.StringIO()
@@ -203,14 +237,22 @@ def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_t
     output_div = html.Div(className="row", children=[
         html.H3('Results:'),
         results_div,
-        html.Br(),
-        html.A(
-            html.Button("Download Full Data as CSV File",
-                        className="button button-primary"),
-            id='download-link',
-            href="data:text/csv;charset=utf-8," + csv_string,
-            download="phd_data.csv"
-        )
+        dbc.Row(children=[
+            html.A(
+                html.Button("Download Full Data as CSV File",
+                            className="button button-primary"),
+                id='download-link',
+                href="data:text/csv;charset=utf-8," + csv_string,
+                download="phd_data.csv"
+            )
+        ], style={'padding': '10px'}),
+        dbc.Row(children=[
+            html.A(
+                html.Button("Build Word Cloud",
+                            className="button button-primary"),
+                id='build-word-cloud',
+            )
+        ], style={'padding': '10px'}),
     ])
 
     return output_div
@@ -235,6 +277,41 @@ def trigger_function(n_clicks, trigger):
             return trigger
     else:
         return trigger  # If scrape completes and signals trigger again
+
+
+@app.callback(
+    Output('word-cloud', 'children'),
+    [Input('build-word-cloud', 'n_clicks')],
+    [State('data_output', 'data')]
+)
+def build_word_cloud(n_clicks, data):
+    if n_clicks is None or n_clicks == 0:
+        raise PreventUpdate
+
+    # Extract the titles from the data
+    titles = [row['title'] for row in data]
+
+    # Generate the word cloud
+    wordcloud = WordCloud(width=800, height=400,
+                          margin=1).generate(' '.join(titles))
+
+    # Convert the word cloud image to a base64-encoded string
+    image_data = io.BytesIO()
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    plt.tight_layout()
+    plt.savefig(image_data, format='png')
+    plt.close()
+    image_data.seek(0)
+    encoded_image = base64.b64encode(image_data.getvalue()).decode('utf-8')
+
+    # Create a div to display the word cloud
+    word_cloud_div = html.Div([
+        html.H4('Word Cloud'),
+        html.Img(src=f"data:image/png;base64,{encoded_image}")
+    ])
+
+    return word_cloud_div
 
 
 if __name__ == "__main__":
