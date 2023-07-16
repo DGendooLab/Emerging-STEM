@@ -19,20 +19,19 @@ default_parameters = {
 }
 
 heading = '''
-You provide a set of standard input parameters: 
-- **Academic Discipline**
-- **Hours Type**
-- **Funding Type**
+## Welcome to EmergingSTEM-PhD
 
-In addition to two non-standard parameters: 
-- **Keywords in Title**: A list of keywords to search for in a title which, if matched, increase the normalized rating. 
-- **Keywords to Exclude**: A list of keywords to search for in a title which renders the rating of that job zero. E.g., if you really hate Data discipline, you would include: "Data"
+**How to use the app:**
 
-The web scraper searches through all the PhD listings with those parameters and returns all the listings ordered by the "rating" metric based on the ordered list of keywords.
+- Select your preferred academic discipline, hours type, and funding type from the dropdown menus.
+- Enter keywords in the "Keywords in Title" field to filter the results based on specific criteria.
+- Use the "Keywords to Exclude" field to exclude certain keywords from the results.
+- Adjust the range slider to refine the search based on the relevance of the keywords.
+- Click the "Find PhDs" button to retrieve the matching PhD listings.
+- Explore the results, download the data, and generate a word cloud for the titles.
 
-You can then download the full dataframe as a CSV file for convenience. 
+**Note: Parsing through all job descriptions can take some time.**
 
-**NOTE: Parsing through all job descriptions can take some time.**
 '''
 
 # Create scrape instance
@@ -83,7 +82,7 @@ hours_type_options = [
 ]
 
 # Set external stylesheets
-external_stylesheets = [dbc.themes.FLATLY]
+external_stylesheets = [dbc.themes.LUMEN]
 
 # Create app
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -92,8 +91,6 @@ server = app.server
 # Define app layout
 app.layout = html.Div(children=[
     dbc.Container(children=[
-        html.H2(children='EmergingSTEM-PhD'),
-        html.H4(children='How to use me:'),
         dcc.Markdown(children=heading),
         dbc.Row(children=[
             dbc.Col(children=[
@@ -116,12 +113,12 @@ app.layout = html.Div(children=[
             dbc.Col(children=[
                 html.Label('Keywords in Title'),
                 dcc.Input(id='ordered_keywords',
-                          value=default_parameters['ordered_keywords'], type='text'),
+                          value=default_parameters['ordered_keywords'], type='text', style={'padding': '6px'}),
             ], width=6, style={'padding': '6px'}),
             dbc.Col(children=[
                 html.Label('Keywords to Exclude'),
                 dcc.Input(id='exclude_keywords',
-                          value=default_parameters['exclude_keywords'], type='text'),
+                          value=default_parameters['exclude_keywords'], type='text', style={'padding': '6px'}),
             ], width=6, style={'padding': '6px'}),
         ]),
         dbc.Row(children=[
@@ -143,7 +140,7 @@ app.layout = html.Div(children=[
         dbc.Row(children=[
             dbc.Col(children=[
                 dbc.Button('Find PhDs', id='find_phds',
-                           className="button button-primary"),
+                           className="btn btn-primary"),
             ], width=12, style={'padding': '10px'}),
         ]),
         dcc.Loading(
@@ -212,23 +209,38 @@ def update_results(n_clicks, trigger, academic_discipline, hours_type, funding_t
     # Close the buffer
     csv_buffer.close()
 
-    # Results table div
     results_div = html.Div(className="row", children=[
-        html.Div(className="twelve columns", children=[
+        html.Div(className="table-active", children=[
             dash_table.DataTable(
                 data=df.to_dict('records'),
                 columns=[{'id': c, 'name': c} for c in df.columns],
-                style_table={'overflowX': 'auto'},
+                style_table={'width': '100%', 'overflowX': 'auto'},
                 id="data_output",
-                style_cell={'textAlign': 'left', 'maxWidth': '200px'},
+                style_cell={
+                    'textAlign': 'left',
+                    'fontSize': '14px',  # Adjust the font size as needed
+                    'fontFamily': 'Arial, sans-serif',  # Specify the font family
+                    'padding': '8px',  # Add padding for cell content
+                },
+                style_data={
+                    'whiteSpace': 'normal',
+                    'height': 'auto',
+                },
                 style_data_conditional=[
                     {
-                        'if': {
-                            'column_id': 'title',
-                        },
-                        'maxWidth': '400px',
+                        'if': {'column_id': 'title'},
+                        'height': 'auto',
                     },
-                ]
+                    {
+                        'if': {
+                            'filter_query': '{column_id} != "title"'
+                        },
+                        'whiteSpace': 'nowrap',
+                        'overflow': 'hidden',
+                        'textOverflow': 'ellipsis',
+                        'maxWidth': '200px',  # Adjust the maximum width as needed
+                    },
+                ],
             )
         ])
     ])
