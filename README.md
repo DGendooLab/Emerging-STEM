@@ -19,10 +19,15 @@ EmergingSTEM-PhD, a web app that allows you to search and explore PhD listings b
 ## Screenshots
 
 - Web Interface
+
   <img src="images/web-interface.jpg" style="width: 80%" >
+
 - Result Output
+
   <img src="images/result-output.jpg" style="width: 80%" >
+
 - Word Cloud Output
+
   <img src="images/word-cloud-output.jpg" style="width: 80%" >
 
 ## Built With
