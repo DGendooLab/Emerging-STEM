@@ -18,7 +18,7 @@ Emerging-STEM, a web app that allows you to search and explore PhD and Jobs list
 
 ## Screenshots
 
-(Layout updating is in progress, maybe screenshots are out of date)
+(Layout updating is in progress, screenshots maybe out of date)
 
 - Web Interface
 
