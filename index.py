@@ -4,6 +4,7 @@ from home import create_page_home
 from page_jobs import create_page_jobs
 from page_phds import create_page_phds
 from app import app
+import callbacks
 
 server = app.server
 app.config.suppress_callback_exceptions = True
