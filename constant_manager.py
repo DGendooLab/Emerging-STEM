@@ -1,21 +1,20 @@
-default_parameters = {
-    'academic_discipline': 'computer-sciences',
-    'hours_type': 'full-time',
-    'funding_type': 'international-students',
-    'ordered_keywords': "Artificial, Machine, Robot, Automation, Simulation",
-    'exclude_keywords': "Data",
+default_parameters_job_page = {
+    'search_keywords': '',
+    'academic_discipline': 'biology-sciences',
+    'ordered_keywords': "Junior, Assistant, Research, Data",
+    'exclude_keywords': "Lecturer",
 }
 
-heading = '''
-## Welcome to EmergingSTEM-PhD
+heading_job_page = '''
+## Welcome to EmergingSTEM-Job
 
 **How to use the app:**
 
-- Select your preferred academic discipline, hours type, and funding type from the dropdown menus.
+- Input search keywords and select your preferred academic discipline from the dropdown menus.
 - Enter keywords in the "Keywords in Title" field to filter the results based on specific criteria.
 - Use the "Keywords to Exclude" field to exclude certain keywords from the results.
 - Adjust the range slider to refine the search based on the relevance of the keywords.
-- Click the "Find PhDs" button to retrieve the matching PhD listings.
+- Click the "Find Jobs" button to retrieve the matching Job listings.
 - Explore the results, download the data, and generate a word cloud for the titles.
 
 **Note: Parsing through all data can take some time.**
@@ -52,6 +51,30 @@ academic_discipline_options = [
         "value": "social-sciences-and-social-care"},
     {"label": "Sport & Leisure", "value": "sport-and-leisure"}
 ]
+
+default_parameters_phd_page = {
+    'academic_discipline': 'computer-sciences',
+    'hours_type': 'full-time',
+    'funding_type': 'international-students',
+    'ordered_keywords': "Artificial, Machine, Robot, Automation, Simulation",
+    'exclude_keywords': "Data",
+}
+
+heading_phd_page = '''
+## Welcome to EmergingSTEM-PhD
+
+**How to use the app:**
+
+- Select your preferred academic discipline, hours type, and funding type from the dropdown menus.
+- Enter keywords in the "Keywords in Title" field to filter the results based on specific criteria.
+- Use the "Keywords to Exclude" field to exclude certain keywords from the results.
+- Adjust the range slider to refine the search based on the relevance of the keywords.
+- Click the "Find PhDs" button to retrieve the matching PhD listings.
+- Explore the results, download the data, and generate a word cloud for the titles.
+
+**Note: Parsing through all data can take some time.**
+
+'''
 
 funding_type_options = [
     {"label": "EU Students", "value": "eu-students"},

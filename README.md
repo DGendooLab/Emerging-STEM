@@ -2,7 +2,7 @@
 
 live version: https://emergingstem.onrender.com/
 
-Emerging-STEM-PhD, a web app that allows you to search and explore PhD listings based on academic discipline, funding type, and other criteria
+Emerging-STEM, a web app that allows you to search and explore PhD and Jobs listings based on servaral criteria, and provides analysis and visualization function based on your search result.
 
 ## Usage
 
@@ -10,17 +10,21 @@ Emerging-STEM-PhD, a web app that allows you to search and explore PhD listings 
 
 2. Use the dropdowns and input fields to specify your search parameters.
 
-3. Click on the "Find PhDs" button to retrieve and display the PhD listings.
+3. Click on the "Find PhDs" or "Find Jobs" button to retrieve and display the PhD/Job listings.
 
 4. Explore the results in the interactive table. You can sort columns, filter data using the range slider, and download the full dataset as a CSV file.
 
-5. Click on the "Build Word Cloud" button to generate a word cloud based on the job titles.
+5. Click on the "Build Word Cloud" button to generate a word cloud based on your 'results' data.
 
 ## Screenshots
 
+(Layout updating is in progress, maybe screenshots are out of date)
+
 - Web Interface
 
-  <img src="images/web-interface.jpg" style="width: 80%" >
+  <img src="images/web-interface-1.jpg" style="width: 80%" >
+
+  <img src="images/web-interface-2.jpg" style="width: 80%" >
 
 - Result Output
 

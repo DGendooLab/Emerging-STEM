@@ -4,7 +4,7 @@ import pandas as pd
 import re
 
 
-class Scrape:
+class Scrape_PhD:
     @staticmethod
     def create_url(parameters):
         academic_discipline = parameters['academic_discipline']
