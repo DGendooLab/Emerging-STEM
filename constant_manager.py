@@ -1,8 +1,8 @@
 default_parameters_job_page = {
     'search_keywords': '',
     'academic_discipline': 'biology-sciences',
-    'ordered_keywords': "Graduate, Junior, Assistant, Research",
-    'exclude_keywords': "Data",
+    'ordered_keywords': "Junior, Assistant, Research, Data",
+    'exclude_keywords': "Lecturer",
 }
 
 heading_job_page = '''

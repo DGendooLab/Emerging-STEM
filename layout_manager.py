@@ -1,33 +1,14 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 from constant_manager import default_parameters_job_page, default_parameters_phd_page, academic_discipline_options, heading_job_page, heading_phd_page, funding_type_options, hours_type_options
-layout_navbar = html.Div(
+
+layout_navbar = dbc.Nav(
     [
-        dbc.NavbarSimple(
-            children=[
-                dbc.DropdownMenu(
-                    nav=True,
-                    in_navbar=True,
-                    label="Menu",
-                    children=[
-                        dbc.DropdownMenuItem("Home", href='/'),
-                        dbc.DropdownMenuItem(divider=True),
-                        dbc.DropdownMenuItem("Find Jobs", href='/jobs'),
-                        dbc.DropdownMenuItem("Find PhDs", href='/phds'),
-                    ],
-                ),
-            ],
-            brand="Home",
-            brand_href="/",
-            sticky="top",
-            # Change this to change color of the navbar e.g. "primary", "secondary" etc.
-            color="dark",
-            # Change this to change color of text within the navbar (False for dark text)
-            dark=True,
-        )
+        dbc.NavItem(dbc.NavLink("Home", active=True, href="/")),
+        dbc.NavItem(dbc.NavLink("Find PhDs", href="/phds")),
+        dbc.NavItem(dbc.NavLink("Find Jobs", href="/jobs")),
     ]
 )
-
 
 layout_homepage = html.Div([
     layout_navbar,
