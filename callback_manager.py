@@ -20,10 +20,10 @@ import base64
         State("funding_type", "value"),
         State("ordered_keywords", "value"),
         State("exclude_keywords", "value"),
-        State("range_slider", "value")
+        State("tick_boxes", "value")
      ]
 )
-def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords, range_slider):
+def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords, tick_boxes):
     # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
@@ -46,15 +46,15 @@ def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, fund
     df = scraper_phds.get_scrape(parameters)
 
     # Filter data based on output_range value
-    if range_slider == [0, 0]:
+    if tick_boxes == ['include']:
         df = df[df['rating'] > 0]
-    elif range_slider == [0, 1]:
+    elif tick_boxes == ['include', 'none']:
         df = df[df['rating'] >= 0]
-    elif range_slider == [1, 1]:
+    elif tick_boxes == ['none']:
         df = df[df['rating'] == 0]
-    elif range_slider == [0, 2]:
+    elif tick_boxes == ['include', 'none', 'exclude']:
         df = df
-    elif range_slider == [2, 2]:
+    elif tick_boxes == ['exclude']:
         df = df[df['rating'] == -1]
 
     # Create a buffer to store CSV data
@@ -190,10 +190,10 @@ def build_phds_word_cloud(n_clicks, data):
         State("academic_discipline", "value"),
         State("ordered_keywords", "value"),
         State("exclude_keywords", "value"),
-        State("range_slider", "value")
+        State("tick_boxes", "value")
      ]
 )
-def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline, ordered_keywords, exclude_keywords, range_slider):
+def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline, ordered_keywords, exclude_keywords, tick_boxes):
     # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
@@ -215,15 +215,15 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
     df = scraper_job.get_scrape(parameters)
 
     # Filter data based on output_range value
-    if range_slider == [0, 0]:
+    if tick_boxes == ['include']:
         df = df[df['rating'] > 0]
-    elif range_slider == [0, 1]:
+    elif tick_boxes == ['include', 'none']:
         df = df[df['rating'] >= 0]
-    elif range_slider == [1, 1]:
+    elif tick_boxes == ['none']:
         df = df[df['rating'] == 0]
-    elif range_slider == [0, 2]:
+    elif tick_boxes == ['include', 'none', 'exclude']:
         df = df
-    elif range_slider == [2, 2]:
+    elif tick_boxes == ['exclude']:
         df = df[df['rating'] == -1]
 
     # Create a buffer to store CSV data

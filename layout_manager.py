@@ -47,17 +47,15 @@ layout_find_jobs = html.Div(children=[
         ]),
         dbc.Row(children=[
             dbc.Col(children=[
-                dcc.RangeSlider(
-                    min=0,
-                    max=2,
-                    step=1,
-                    value=[0, 1],
-                    marks={
-                        0: {'label': 'with include keyword'},
-                        1: {'label': 'without exclude or include keyword'},
-                        2: {'label': 'with exclude keyword'}
-                    },
-                    id='range_slider'
+                dcc.Checklist(
+                    options=[
+                        {'label': 'With include keyword', 'value': 'include'},
+                        {'label': 'Without exclude or include keyword', 'value': 'none'},
+                        {'label': 'With exclude keyword', 'value': 'exclude'}
+                    ],
+                    value=['include', 'none'],
+                    id='tick_boxes',
+                    labelStyle={'display': 'block', 'margin-left': '10px'}
                 ),
             ], width=6, style={'padding': '10px'}),
         ]),
@@ -117,17 +115,15 @@ layout_find_phds = html.Div(children=[
         ]),
         dbc.Row(children=[
             dbc.Col(children=[
-                dcc.RangeSlider(
-                    min=0,
-                    max=2,
-                    step=1,
-                    value=[0, 1],
-                    marks={
-                        0: {'label': 'with include keyword'},
-                        1: {'label': 'without exclude or include keyword'},
-                        2: {'label': 'with exclude keyword'}
-                    },
-                    id='range_slider'
+                dcc.Checklist(
+                    options=[
+                        {'label': 'With include keyword', 'value': 'include'},
+                        {'label': 'Without exclude or include keyword', 'value': 'none'},
+                        {'label': 'With exclude keyword', 'value': 'exclude'}
+                    ],
+                    value=['include', 'none'],
+                    id='tick_boxes',
+                    labelStyle={'display': 'block', 'margin-left': '10px'}
                 ),
             ], width=6, style={'padding': '10px'}),
         ]),
