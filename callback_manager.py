@@ -48,14 +48,8 @@ def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, fund
     # Filter data based on output_range value
     if tick_boxes == ['include']:
         df = df[df['rating'] > 0]
-    elif tick_boxes == ['include', 'none']:
-        df = df[df['rating'] >= 0]
-    elif tick_boxes == ['none']:
-        df = df[df['rating'] == 0]
-    elif tick_boxes == ['include', 'none', 'exclude']:
+    else:
         df = df
-    elif tick_boxes == ['exclude']:
-        df = df[df['rating'] == -1]
 
     # Create a buffer to store CSV data
     csv_buffer = io.StringIO()
@@ -217,14 +211,9 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
     # Filter data based on output_range value
     if tick_boxes == ['include']:
         df = df[df['rating'] > 0]
-    elif tick_boxes == ['include', 'none']:
-        df = df[df['rating'] >= 0]
-    elif tick_boxes == ['none']:
-        df = df[df['rating'] == 0]
-    elif tick_boxes == ['include', 'none', 'exclude']:
+    else:
         df = df
-    elif tick_boxes == ['exclude']:
-        df = df[df['rating'] == -1]
+
 
     # Create a buffer to store CSV data
     csv_buffer = io.StringIO()

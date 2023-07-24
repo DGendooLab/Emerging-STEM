@@ -50,10 +50,7 @@ layout_find_jobs = html.Div(children=[
                 dcc.Checklist(
                     options=[
                         {'label': 'With include keyword', 'value': 'include'},
-                        {'label': 'Without exclude or include keyword', 'value': 'none'},
-                        {'label': 'With exclude keyword', 'value': 'exclude'}
                     ],
-                    value=['include', 'none'],
                     id='tick_boxes',
                     labelStyle={'display': 'block', 'margin-left': '10px'}
                 ),
@@ -118,10 +115,7 @@ layout_find_phds = html.Div(children=[
                 dcc.Checklist(
                     options=[
                         {'label': 'With include keyword', 'value': 'include'},
-                        {'label': 'Without exclude or include keyword', 'value': 'none'},
-                        {'label': 'With exclude keyword', 'value': 'exclude'}
                     ],
-                    value=['include', 'none'],
                     id='tick_boxes',
                     labelStyle={'display': 'block', 'margin-left': '10px'}
                 ),

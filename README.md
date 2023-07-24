@@ -1,6 +1,6 @@
-# Emerging-STEM
+# Emerging-STEM/Careerfinder
 
-live version: [https://emergingstem.onrender.com/](https://dgendoolab-careerfinder.onrender.com)
+live version: https://dgendoolab-careerfinder.onrender.com
 
 One web app that allows you to search and explore PhD and Jobs listings based on servaral criteria, and provides analysis and visualization function based on your search result.
 
