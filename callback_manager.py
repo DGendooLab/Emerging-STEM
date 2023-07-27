@@ -19,18 +19,16 @@ import base64
         State("hours_type", "value"),
         State("funding_type", "value"),
         State("ordered_keywords", "value"),
-        State("exclude_keywords", "value"),
         State("tick_boxes", "value")
      ]
 )
-def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, exclude_keywords, tick_boxes):
+def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, tick_boxes):
     # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
 
     # Grab input
     ordered_keywords = [x.strip() for x in ordered_keywords.split(",")]
-    exclude_keywords = [x.strip() for x in exclude_keywords.split(",")]
 
     # Scraping parameters
     parameters = {
@@ -38,7 +36,6 @@ def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, fund
         'hours_type': hours_type,
         'funding_type': funding_type,
         'ordered_keywords': ordered_keywords,
-        'exclude_keywords': exclude_keywords,
     }
  # Create scrape instance
     scraper_phds = Scrape_PhD()
@@ -183,25 +180,23 @@ def build_phds_word_cloud(n_clicks, data):
     [State("search_keywords", "value"),
         State("academic_discipline", "value"),
         State("ordered_keywords", "value"),
-        State("exclude_keywords", "value"),
         State("tick_boxes", "value")
      ]
 )
-def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline, ordered_keywords, exclude_keywords, tick_boxes):
+def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline, ordered_keywords, tick_boxes):
     # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
 
     # Grab input
     ordered_keywords = [x.strip() for x in ordered_keywords.split(",")]
-    exclude_keywords = [x.strip() for x in exclude_keywords.split(",")]
 
     # Scraping parameters
     parameters = {
         'search_keywords': search_keywords,
         'academic_discipline': academic_discipline,
         'ordered_keywords': ordered_keywords,
-        'exclude_keywords': exclude_keywords,
+
     }
     # Create scrape instance
     scraper_job = Scrape_Job()
@@ -213,7 +208,6 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
         df = df[df['rating'] > 0]
     else:
         df = df
-
 
     # Create a buffer to store CSV data
     csv_buffer = io.StringIO()

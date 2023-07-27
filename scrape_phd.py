@@ -16,7 +16,6 @@ class Scrape_PhD:
     @staticmethod
     def rate_phd(data, parameters):
         title_keywords = parameters['ordered_keywords']
-        exclude_keywords = parameters['exclude_keywords']
         total_keywords = len(title_keywords)
         title_keywords_present = []
         rating = 0
@@ -28,11 +27,6 @@ class Scrape_PhD:
 
         rating = rating / sum(range(1, total_keywords + 1))
         rating = round(rating, 3)  # Round up
-
-        for keyword in exclude_keywords:
-            if keyword in data['title']:
-                rating = -1
-                break
 
         # Convert title_keywords_present to string representation
         title_keywords_present_str = ", ".join(title_keywords_present)

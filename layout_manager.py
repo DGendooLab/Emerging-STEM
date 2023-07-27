@@ -112,11 +112,6 @@ layout_find_jobs = html.Div(children=[
                 dcc.Input(id='ordered_keywords',
                           value=default_parameters_job_page['ordered_keywords'], type='text', style={'padding': '6px'}),
             ], width=6, style={'padding': '6px'}),
-            dbc.Col(children=[
-                html.Label('Keywords to Exclude'),
-                dcc.Input(id='exclude_keywords',
-                          value=default_parameters_job_page['exclude_keywords'], type='text', style={'padding': '6px'}),
-            ], width=6, style={'padding': '6px'}),
         ]),
         dbc.Row(children=[
             dbc.Col(children=[
@@ -176,11 +171,6 @@ layout_find_phds = html.Div(children=[
                 html.Label('Keywords in Title'),
                 dcc.Input(id='ordered_keywords',
                           value=default_parameters_phd_page['ordered_keywords'], type='text', style={'padding': '6px'}),
-            ], width=6, style={'padding': '6px'}),
-            dbc.Col(children=[
-                html.Label('Keywords to Exclude'),
-                dcc.Input(id='exclude_keywords',
-                          value=default_parameters_phd_page['exclude_keywords'], type='text', style={'padding': '6px'}),
             ], width=6, style={'padding': '6px'}),
         ]),
         dbc.Row(children=[
