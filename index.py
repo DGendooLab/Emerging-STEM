@@ -12,6 +12,9 @@ app.layout = html.Div([
     html.Div(id='page-content')
 ])
 
+app.title = "Career Finder"
+app._favicon = "icon.png"
+
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
