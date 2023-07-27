@@ -1,6 +1,7 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 from constant_manager import default_parameters_job_page, default_parameters_phd_page, academic_discipline_options, heading_job_page, heading_phd_page, funding_type_options, hours_type_options
+from app import app  # Import the app instance from app.py
 
 layout_navbar = dbc.Nav(
     [
@@ -10,10 +11,82 @@ layout_navbar = dbc.Nav(
     ]
 )
 
-layout_homepage = html.Div([
-    layout_navbar,
-    html.H3('Welcome to home page!')
-])
+wordcloud_image_url = app.get_asset_url("word_cloud_homepage.png")
+
+# Text for the two features
+feature1_text = "Helping you efficiently find PhD studentship opportunities in the UK."
+feature2_text = "Helping you efficiently find academic job opportunities in the UK."
+
+# Expanded Introductory text
+intro_text = """
+Welcome to Career Finder, a web application lead by [Dr Gendoo Deena](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx), and developed by the intern team at DGengoo Lab. Career Finder is designed to be your one-stop destination for academic and research opportunities in the UK. Whether you are a student looking for Ph.D. studentships or a professional seeking academic jobs, Career Finder has got you covered.
+
+Explore the word cloud generated from the latest academic listings and gain insights into the trending research areas and disciplines. Our application empowers you with an efficient and intuitive interface, making your search process seamless.
+
+So, what are you waiting for? Start your journey towards a successful academic career with Career Finder!
+"""
+# Define custom CSS styles
+custom_styles = {
+    'wordcloud_img': {
+        'display': 'block',
+        'margin': 'auto',
+        'max-height': '400px',
+        'border-radius': '8px'
+    },
+    'feature_card_title': {
+        'color': '#007BFF',  # Blue color for feature card titles
+        'font-weight': 'bold'
+    },
+    'intro_text': {
+        'font-size': '18px',
+        'line-height': '1.6',
+        'margin-bottom': '30px'
+    },
+    'feature_gap': {
+        'margin-top': '20px'
+    }
+}
+# Define the layout of the homepage with Bootstrap components and custom styling
+layout_homepage = dbc.Container([
+    dbc.Row([
+        dbc.Col(html.H1("Welcome to Career Finder",
+                className="display-4 text-center mb-4"), width=12)
+    ]),
+    dbc.Row([
+        dbc.Col([
+            html.Img(src=wordcloud_image_url, className="img-fluid",
+                     style=custom_styles['wordcloud_img']),
+        ], width={"size": 8, "offset": 2})
+    ], className="my-4"),
+    dbc.Row([
+        dbc.Col([
+            html.H3("Features", className="text-center"),
+            dbc.CardGroup([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H4(html.A("Find PhD Studentships", href="/phds", className="card-link text-dark",
+                                style=custom_styles['feature_card_title']), className="card-title"),
+                        html.P(feature1_text, className="card-text")
+                    ])
+                ]),
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H4(html.A("Find Academic Jobs", href="/jobs", className="card-link text-dark",
+                                style=custom_styles['feature_card_title']), className="card-title"),
+                        html.P(feature2_text, className="card-text")
+                    ])
+                ])
+            ])
+        ], width={"size": 8, "offset": 2})
+    ], className="my-4"),
+    dbc.Row([
+        dbc.Col([
+            html.H3("Introduction", className="text-center"),
+            dcc.Markdown(intro_text, className="lead",
+                         style=custom_styles['intro_text'])
+        ], width={"size": 8, "offset": 2})
+    ], className="my-4"),
+], fluid=True)
 
 # Define find_jobs page layout
 layout_find_jobs = html.Div(children=[
