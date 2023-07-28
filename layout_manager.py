@@ -8,7 +8,7 @@ layout_navbar = dbc.Nav(
         dbc.NavItem(dbc.NavLink("Home", active=True, href="/")),
         dbc.NavItem(dbc.NavLink("Find PhDs", href="/phds")),
         dbc.NavItem(dbc.NavLink("Find Jobs", href="/jobs")),
-    ]
+    ],
 )
 
 wordcloud_image_url = app.get_asset_url("word_cloud_homepage.png")
@@ -89,32 +89,50 @@ layout_homepage = dbc.Container([
 ], fluid=True)
 
 # Define find_jobs page layout
-layout_find_jobs = html.Div(children=[
+layout_find_jobs = html.Div([
     # Add Navbar
     layout_navbar,
-    dbc.Container(children=[
-        dcc.Markdown(children=heading_job_page),
-        dbc.Row(children=[
-            dbc.Col(children=[
-                html.Label('Search Keywords'),
-                dcc.Input(id='search_keywords',
-                          value=default_parameters_job_page['search_keywords'], type='text', style={'padding': '6px'})
-            ], width=6, style={'padding': '6px'}),
-            dbc.Col(children=[
-                html.Label('Academic Discipline'),
-                dcc.Dropdown(options=academic_discipline_options,
-                             value=default_parameters_job_page['academic_discipline'], id="academic_discipline"),
-            ], width=6, style={'padding': '6px'}),
-        ]),
-        dbc.Row(children=[
-            dbc.Col(children=[
-                html.Label('Keywords in Title'),
-                dcc.Input(id='ordered_keywords',
-                          value=default_parameters_job_page['ordered_keywords'], type='text', style={'padding': '6px'}),
+    dbc.Container([
+        html.H1("Find Job Opportunities", style={
+                'text-align': 'center', 'margin-top': '20px'}),
+        dcc.Markdown(heading_job_page, style={'text-align': 'center'}),
+        dbc.Row([
+            dbc.Col([
+                html.Label('Search Keywords', style={'font-weight': 'bold'}),
+                dcc.Input(
+                    id='search_keywords',
+                    value=default_parameters_job_page['search_keywords'],
+                    type='text',
+                    style={'padding': '12px', 'width': '100%',
+                           'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
+                )
             ], width=6, style={'padding': '6px'}),
         ]),
-        dbc.Row(children=[
-            dbc.Col(children=[
+        dbc.Row([
+            dbc.Col([
+                html.Label('Academic Discipline',
+                           style={'font-weight': 'bold'}),
+                dcc.Dropdown(
+                    options=academic_discipline_options,
+                    value=default_parameters_job_page['academic_discipline'],
+                    id="academic_discipline",
+                    style={'width': '100%', 'margin-bottom': '10px'}
+                ),
+            ], width=4, style={'padding': '6px'}),
+        ]),
+        dbc.Row([
+            dbc.Col([
+                html.Label('Keywords in Title', style={'font-weight': 'bold'}),
+                dcc.Input(
+                    id='ordered_keywords',
+                    value=default_parameters_job_page['ordered_keywords'],
+                    type='text',
+                    style={'padding': '12px', 'width': '100%',
+                           'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
+                ),
+            ], width=6, style={'padding': '10px'}),]),
+        dbc.Row([
+            dbc.Col([
                 dcc.Checklist(
                     options=[
                         {'label': 'With include keyword', 'value': 'include'},
@@ -124,10 +142,10 @@ layout_find_jobs = html.Div(children=[
                 ),
             ], width=6, style={'padding': '10px'}),
         ]),
-        dbc.Row(children=[
-            dbc.Col(children=[
-                dbc.Button('Find Jobs', id='find_jobs',
-                           className="btn btn-primary"),
+        dbc.Row([
+            dbc.Col([
+                html.Button('Find Jobs', id='find_jobs',
+                            className="btn btn-primary", style={'width': '100%'}),
             ], width=12, style={'padding': '10px'}),
         ]),
         dcc.Loading(
@@ -137,11 +155,11 @@ layout_find_jobs = html.Div(children=[
             ],
             type="circle",
         ),
-        html.Div(id='trigger_jobs', children=0,
-                    style=dict(display='none')),
+        html.Div(id='trigger_jobs', children=0, style=dict(display='none')),
         html.Div(id='word-cloud-jobs')
-    ])
-])
+    ], style={'max-width': '800px', 'margin': '0 auto'})
+], style={'background-color': '#f9f9f9', 'padding': '20px'})
+
 
 # Define the layout for finding PhDs
 layout_find_phds = html.Div([
@@ -156,7 +174,7 @@ layout_find_phds = html.Div([
                 html.Label('Search Keywords', style={'font-weight': 'bold'}),
                 dcc.Input(
                     id='search_keywords',
-                    value=default_parameters_job_page['search_keywords'],
+                    value=default_parameters_phd_page['search_keywords'],
                     type='text',
                     style={'padding': '12px', 'width': '100%',
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
@@ -203,7 +221,7 @@ layout_find_phds = html.Div([
                     style={'padding': '12px', 'width': '100%',
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
                 ),
-            ], width=6, style={'padding': '6px'}),
+            ], width=6, style={'padding': '10px'}),
         ]),
         dbc.Row([
             dbc.Col([

@@ -1,25 +1,21 @@
 default_parameters_job_page = {
     'search_keywords': '',
-    'academic_discipline': 'biology-sciences',
+    'academic_discipline': 'biological-sciences',
     'ordered_keywords': "Junior, Assistant, Research, Data",
     'exclude_keywords': "Lecturer",
 }
 
-heading_job_page = '''
-## Welcome to EmergingSTEM-Job
+heading_job_page = """
 
-**How to use the app:**
+Are you looking for exciting job opportunities in your field? Use our search tool to find the perfect job that matches your skills and interests. Whether you're searching by job title, company, or location, our platform will help you discover the right fit.
 
-- Input search keywords and select your preferred academic discipline from the dropdown menus.
-- Enter keywords in the "Keywords in Title" field to filter the results based on specific criteria.
-- Use the "Keywords to Exclude" field to exclude certain keywords from the results.
-- Adjust the range slider to refine the search based on the relevance of the keywords.
-- Click the "Find Jobs" button to retrieve the matching Job listings.
-- Explore the results, download the data, and generate a word cloud for the titles.
+Simply enter relevant keywords to narrow down your search, or explore job opportunities.
 
-**Note: Parsing through all data can take some time.**
+Start your journey towards a fulfilling career today! Click the "Find Jobs" button below to begin your job search.
 
-'''
+Best of luck with your job hunt!
+"""
+
 academic_discipline_options = [
     {"label": "Agriculture, Food & Veterinary",
         "value": "agriculture-food-and-veterinary"},
@@ -33,6 +29,7 @@ academic_discipline_options = [
 ]
 
 default_parameters_phd_page = {
+    'search_keywords': '',
     'academic_discipline': 'computer-sciences',
     'hours_type': 'full-time',
     'funding_type': 'international-students',
