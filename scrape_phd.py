@@ -7,10 +7,12 @@ import re
 class Scrape_PhD:
     @staticmethod
     def create_url(parameters):
+        search_keywords = parameters['search_keywords'].replace(' ', '+')
         academic_discipline = parameters['academic_discipline']
         hours_type = parameters['hours_type']
         funding_type = parameters['funding_type']
-        base_url = f"https://www.jobs.ac.uk/search/?activeFacet=hoursTypeFacet&sortOrder=1&pageSize=25&startIndex=1&academicDisciplineFacet%5B0%5D={academic_discipline}&jobTypeFacet%5B0%5D=phds&hoursTypeFacet%5B0%5D={hours_type}&fundingTypeFacet%5B0%5D={funding_type}"
+        base_url = f"https://www.jobs.ac.uk/search/?keywords={search_keywords}&activeFacet=hoursTypeFacet&sortOrder=1&pageSize=25&startIndex=1&academicDisciplineFacet%5B0%5D={academic_discipline}&jobTypeFacet%5B0%5D=phds&hoursTypeFacet%5B0%5D={hours_type}&fundingTypeFacet%5B0%5D={funding_type}"
+
         return base_url
 
     @staticmethod

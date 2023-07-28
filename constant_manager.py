@@ -40,21 +40,17 @@ default_parameters_phd_page = {
     'exclude_keywords': "Data",
 }
 
-heading_phd_page = '''
-## Welcome to EmergingSTEM-PhD
+heading_phd_page = """
 
-**How to use the app:**
+Are you ready to explore exciting PhD opportunities? Use our search tool to find the perfect PhD program that aligns with your interests and academic goals. Whether you're interested in a specific academic discipline, funding type, or research hours, our platform will help you discover the right fit.
 
-- Select your preferred academic discipline, hours type, and funding type from the dropdown menus.
-- Enter keywords in the "Keywords in Title" field to filter the results based on specific criteria.
-- Use the "Keywords to Exclude" field to exclude certain keywords from the results.
-- Adjust the range slider to refine the search based on the relevance of the keywords.
-- Click the "Find PhDs" button to retrieve the matching PhD listings.
-- Explore the results, download the data, and generate a word cloud for the titles.
+Simply enter relevant keywords to narrow down your search, or choose from the available academic disciplines, funding types, and hours options. You can even filter PhDs that include specific keywords in their titles.
 
-**Note: Parsing through all data can take some time.**
+Start your journey towards a rewarding research career today! Click the "Find PhDs" button below to begin your search.
 
-'''
+Good luck and happy exploring!
+"""
+
 
 funding_type_options = [
     {"label": "EU Students", "value": "eu-students"},

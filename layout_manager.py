@@ -143,38 +143,70 @@ layout_find_jobs = html.Div(children=[
     ])
 ])
 
-# Define find_phds page layout
-layout_find_phds = html.Div(children=[
+# Define the layout for finding PhDs
+layout_find_phds = html.Div([
     # Add Navbar
     layout_navbar,
-    dbc.Container(children=[
-        dcc.Markdown(children=heading_phd_page),
-        dbc.Row(children=[
-            dbc.Col(children=[
-                html.Label('Academic Discipline'),
-                dcc.Dropdown(options=academic_discipline_options,
-                             value=default_parameters_phd_page['academic_discipline'], id="academic_discipline"),
-            ], width=4, style={'padding': '6px'}),
-            dbc.Col(children=[
-                html.Label('Funding Type'),
-                dcc.Dropdown(options=funding_type_options,
-                             value=default_parameters_phd_page['funding_type'], id="funding_type"),
-            ], width=4, style={'padding': '6px'}),
-            dbc.Col(children=[
-                html.Label('Hours Type'),
-                dcc.Dropdown(options=hours_type_options,
-                             value=default_parameters_phd_page['hours_type'], id="hours_type"),
-            ], width=4, style={'padding': '6px'}),
-        ]),
-        dbc.Row(children=[
-            dbc.Col(children=[
-                html.Label('Keywords in Title'),
-                dcc.Input(id='ordered_keywords',
-                          value=default_parameters_phd_page['ordered_keywords'], type='text', style={'padding': '6px'}),
+    dbc.Container([
+        html.H1("Find PhD Opportunities", style={
+                'text-align': 'center', 'margin-top': '20px'}),
+        dcc.Markdown(heading_phd_page, style={'text-align': 'center'}),
+        dbc.Row([
+            dbc.Col([
+                html.Label('Search Keywords', style={'font-weight': 'bold'}),
+                dcc.Input(
+                    id='search_keywords',
+                    value=default_parameters_job_page['search_keywords'],
+                    type='text',
+                    style={'padding': '12px', 'width': '100%',
+                           'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
+                )
             ], width=6, style={'padding': '6px'}),
         ]),
-        dbc.Row(children=[
-            dbc.Col(children=[
+        dbc.Row([
+            dbc.Col([
+                html.Label('Academic Discipline', style={
+                           'font-weight': 'bold'}),
+                dcc.Dropdown(
+                    options=academic_discipline_options,
+                    value=default_parameters_phd_page['academic_discipline'],
+                    id="academic_discipline",
+                    style={'width': '100%', 'margin-bottom': '10px'}
+                ),
+            ], width=4, style={'padding': '6px'}),
+            dbc.Col([
+                html.Label('Funding Type', style={'font-weight': 'bold'}),
+                dcc.Dropdown(
+                    options=funding_type_options,
+                    value=default_parameters_phd_page['funding_type'],
+                    id="funding_type",
+                    style={'width': '100%', 'margin-bottom': '10px'}
+                ),
+            ], width=4, style={'padding': '6px'}),
+            dbc.Col([
+                html.Label('Hours Type', style={'font-weight': 'bold'}),
+                dcc.Dropdown(
+                    options=hours_type_options,
+                    value=default_parameters_phd_page['hours_type'],
+                    id="hours_type",
+                    style={'width': '100%', 'margin-bottom': '10px'}
+                ),
+            ], width=4, style={'padding': '6px'}),
+        ]),
+        dbc.Row([
+            dbc.Col([
+                html.Label('Keywords in Title', style={'font-weight': 'bold'}),
+                dcc.Input(
+                    id='ordered_keywords',
+                    value=default_parameters_phd_page['ordered_keywords'],
+                    type='text',
+                    style={'padding': '12px', 'width': '100%',
+                           'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
+                ),
+            ], width=6, style={'padding': '6px'}),
+        ]),
+        dbc.Row([
+            dbc.Col([
                 dcc.Checklist(
                     options=[
                         {'label': 'With include keyword', 'value': 'include'},
@@ -184,10 +216,10 @@ layout_find_phds = html.Div(children=[
                 ),
             ], width=6, style={'padding': '10px'}),
         ]),
-        dbc.Row(children=[
-            dbc.Col(children=[
-                dbc.Button('Find PhDs', id='find_phds',
-                           className="btn btn-primary"),
+        dbc.Row([
+            dbc.Col([
+                html.Button('Find PhDs', id='find_phds',
+                            className="btn btn-primary", style={'width': '100%'})
             ], width=12, style={'padding': '10px'}),
         ]),
         dcc.Loading(
@@ -197,8 +229,7 @@ layout_find_phds = html.Div(children=[
             ],
             type="circle",
         ),
-        html.Div(id='trigger_phds', children=0,
-                    style=dict(display='none')),
+        html.Div(id='trigger_phds', children=0, style=dict(display='none')),
         html.Div(id='word-cloud-phds')
-    ])
-])
+    ], style={'max-width': '800px', 'margin': '0 auto'})
+], style={'background-color': '#f9f9f9', 'padding': '20px'})

@@ -15,14 +15,15 @@ import base64
 @callback(
     Output("results-phds", "children"),
     [Input("find_phds", "n_clicks"), Input('trigger_phds', 'children')],
-    [State("academic_discipline", "value"),
+    [State("search_keywords", "value"),
+        State("academic_discipline", "value"),
         State("hours_type", "value"),
         State("funding_type", "value"),
         State("ordered_keywords", "value"),
         State("tick_boxes", "value")
      ]
 )
-def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, funding_type, ordered_keywords, tick_boxes):
+def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline, hours_type, funding_type, ordered_keywords, tick_boxes):
     # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
@@ -32,6 +33,7 @@ def update_phds_results(n_clicks, trigger, academic_discipline, hours_type, fund
 
     # Scraping parameters
     parameters = {
+        'search_keywords': search_keywords,
         'academic_discipline': academic_discipline,
         'hours_type': hours_type,
         'funding_type': funding_type,
