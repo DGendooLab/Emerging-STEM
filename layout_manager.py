@@ -46,6 +46,7 @@ custom_styles = {
         'margin-top': '20px'
     }
 }
+
 # Define the layout of the homepage with Bootstrap components and custom styling
 layout_homepage = dbc.Container([
     dbc.Row([

@@ -101,8 +101,8 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
         results_div,
         dbc.Row(children=[
             html.A(
-                html.Button("Download Full Data as CSV File",
-                            className="button button-primary"),
+                html.Button("Download data as CSV File",
+                            className="btn btn-primary", style={'width': '30%'}),
                 id='download-link',
                 href="data:text/csv;charset=utf-8," + csv_string,
                 download="phd_data.csv"
@@ -111,7 +111,7 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
         dbc.Row(children=[
             html.A(
                 html.Button("Build Word Cloud",
-                            className="button button-primary"),
+                            className="btn btn-primary", style={'width': '30%'}),
                 id='build-word-cloud-phds',
             )
         ], style={'padding': '10px'}),
@@ -262,17 +262,17 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
         results_div,
         dbc.Row(children=[
             html.A(
-                html.Button("Download Full Data as CSV File",
-                            className="button button-primary"),
+                html.Button("Download data as CSV File",
+                            className="btn btn-primary", style={'width': '30%'}),
                 id='download-link',
                 href="data:text/csv;charset=utf-8," + csv_string,
                 download="job_data.csv"
             )
         ], style={'padding': '10px'}),
         dbc.Row(children=[
-            html.A(
+            dbc.Col(
                 html.Button("Build Word Cloud",
-                            className="button button-primary"),
+                            className="btn btn-primary", style={'width': '30%'}),
                 id='build-word-cloud-jobs',
             )
         ], style={'padding': '10px'}),
