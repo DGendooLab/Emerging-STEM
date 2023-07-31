@@ -1,3 +1,18 @@
+# Text for the two features
+feature1_text = "Helping you efficiently find PhD studentship opportunities in the UK."
+feature2_text = "Helping you efficiently find academic job opportunities in the UK."
+
+# Expanded Introductory text
+intro_text = """
+Welcome to Career Finder, a web application lead by [Dr Gendoo Deena](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx), and developed by the intern team at DGengoo Lab. Career Finder is designed to be your one-stop destination for academic and research opportunities in the UK. Whether you are a student looking for Ph.D. studentships or a professional seeking academic jobs, Career Finder has got you covered.
+
+Explore the word cloud generated from the latest academic listings and gain insights into the trending research areas and disciplines. Our application empowers you with an efficient and intuitive interface, making your search process seamless.
+
+Join us on [GitHub](https://github.com/DGendooLab/Emerging-STEM) to contribute to the project and improve Career Finder for the academic community.
+
+So, what are you waiting for? Start your journey towards a successful academic career with Career Finder!
+"""
+
 default_parameters_job_page = {
     'search_keywords': '',
     'academic_discipline': 'biological-sciences',
