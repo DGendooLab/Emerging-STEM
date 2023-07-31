@@ -44,6 +44,8 @@ class Scrape_Job:
         print(f"[Collection] Job data size: {total_job_number}, collecting...")
 
         total_page_number = (total_job_number + 24) // 25
+        # add limitation on page_number
+        total_page_number = min(total_job_number, 10)
 
         for i in range(1, total_page_number + 1):
             index_start = (i - 1) * 25 + 1

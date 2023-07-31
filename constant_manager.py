@@ -6,14 +6,11 @@ default_parameters_job_page = {
 }
 
 heading_job_page = """
+- Are you looking for exciting job opportunities in your field? Use our search tool to find the perfect job that matches your skills and interests. Whether you're searching by job title, company, or location, our platform will help you discover the right fit.
 
-Are you looking for exciting job opportunities in your field? Use our search tool to find the perfect job that matches your skills and interests. Whether you're searching by job title, company, or location, our platform will help you discover the right fit.
+- Simply enter relevant keywords to narrow down your search, or explore job opportunities.
 
-Simply enter relevant keywords to narrow down your search, or explore job opportunities.
-
-Start your journey towards a fulfilling career today! Click the "Find Jobs" button below to begin your job search.
-
-Best of luck with your job hunt!
+- Start your journey towards a fulfilling career today! Click the "Find Jobs" button below to begin your job search.
 """
 
 academic_discipline_options = [
@@ -38,16 +35,12 @@ default_parameters_phd_page = {
 }
 
 heading_phd_page = """
+- Are you ready to explore exciting PhD opportunities? Use our search tool to find the perfect PhD program that aligns with your interests and academic goals. Whether you're interested in a specific academic discipline, funding type, or research hours, our platform will help you discover the right fit.
 
-Are you ready to explore exciting PhD opportunities? Use our search tool to find the perfect PhD program that aligns with your interests and academic goals. Whether you're interested in a specific academic discipline, funding type, or research hours, our platform will help you discover the right fit.
+- Simply enter relevant keywords to narrow down your search, or choose from the available academic disciplines, funding types, and hours options. You can even filter PhDs that include specific keywords in their titles.
 
-Simply enter relevant keywords to narrow down your search, or choose from the available academic disciplines, funding types, and hours options. You can even filter PhDs that include specific keywords in their titles.
-
-Start your journey towards a rewarding research career today! Click the "Find PhDs" button below to begin your search.
-
-Good luck and happy exploring!
+- Start your journey towards a rewarding research career today! Click the "Find PhDs" button below to begin your search.
 """
-
 
 funding_type_options = [
     {"label": "EU Students", "value": "eu-students"},

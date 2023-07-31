@@ -8,7 +8,11 @@ layout_navbar = dbc.Nav(
         dbc.NavItem(dbc.NavLink("Home", active=True, href="/")),
         dbc.NavItem(dbc.NavLink("Find PhDs", href="/phds")),
         dbc.NavItem(dbc.NavLink("Find Jobs", href="/jobs")),
-    ],
+    ], style={
+        'display': 'flex',
+        'justifyContent': 'center',  # Horizontally center the content
+        'alignItems': 'top',         # Align content to the top
+    },
 )
 
 wordcloud_image_url = app.get_asset_url("word_cloud_homepage.png")
@@ -94,9 +98,9 @@ layout_find_jobs = html.Div([
     # Add Navbar
     layout_navbar,
     dbc.Container([
-        html.H1("Find Job Opportunities", style={
+        html.H2("Find Job Opportunities", style={
                 'text-align': 'center', 'margin-top': '20px'}),
-        dcc.Markdown(heading_job_page, style={'text-align': 'center'}),
+        dcc.Markdown(heading_job_page, style={'text-align': 'left'}),
         dbc.Row([
             dbc.Col([
                 html.Label('Search Keywords', style={'font-weight': 'bold'}),
@@ -108,7 +112,7 @@ layout_find_jobs = html.Div([
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
                 )
             ], width=6, style={'padding': '6px'}),
-        ]),
+        ], style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'top'}),
         dbc.Row([
             dbc.Col([
                 html.Label('Academic Discipline',
@@ -120,18 +124,17 @@ layout_find_jobs = html.Div([
                     style={'width': '100%', 'margin-bottom': '10px'}
                 ),
             ], width=4, style={'padding': '6px'}),
-        ]),
-        dbc.Row([
             dbc.Col([
                 html.Label('Keywords in Title', style={'font-weight': 'bold'}),
                 dcc.Input(
                     id='ordered_keywords',
                     value=default_parameters_job_page['ordered_keywords'],
                     type='text',
-                    style={'padding': '12px', 'width': '100%',
+                    style={'padding': '6px', 'width': '100%',
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
                 ),
-            ], width=6, style={'padding': '10px'}),]),
+            ], width=6, style={'padding': '6px'}),
+        ]),
         dbc.Row([
             dbc.Col([
                 dcc.Checklist(
@@ -146,7 +149,7 @@ layout_find_jobs = html.Div([
         dbc.Row([
             dbc.Col([
                 html.Button('Find Jobs', id='find_jobs',
-                            className="btn btn-primary", style={'width': '100%'}),
+                            className="btn btn-primary", style={'width': '100%'})
             ], width=12, style={'padding': '10px'}),
         ]),
         dcc.Loading(
@@ -167,9 +170,9 @@ layout_find_phds = html.Div([
     # Add Navbar
     layout_navbar,
     dbc.Container([
-        html.H1("Find PhD Opportunities", style={
+        html.H2("Find PhD Opportunities", style={
                 'text-align': 'center', 'margin-top': '20px'}),
-        dcc.Markdown(heading_phd_page, style={'text-align': 'center'}),
+        dcc.Markdown(heading_phd_page, style={'text-align': 'left'}),
         dbc.Row([
             dbc.Col([
                 html.Label('Search Keywords', style={'font-weight': 'bold'}),
@@ -181,11 +184,11 @@ layout_find_phds = html.Div([
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
                 )
             ], width=6, style={'padding': '6px'}),
-        ]),
+        ], style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'top'}),
         dbc.Row([
             dbc.Col([
-                html.Label('Academic Discipline', style={
-                           'font-weight': 'bold'}),
+                html.Label('Academic Discipline',
+                           style={'font-weight': 'bold'}),
                 dcc.Dropdown(
                     options=academic_discipline_options,
                     value=default_parameters_phd_page['academic_discipline'],
@@ -219,10 +222,10 @@ layout_find_phds = html.Div([
                     id='ordered_keywords',
                     value=default_parameters_phd_page['ordered_keywords'],
                     type='text',
-                    style={'padding': '12px', 'width': '100%',
+                    style={'padding': '6px', 'width': '100%',
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
                 ),
-            ], width=6, style={'padding': '10px'}),
+            ], width=6, style={'padding': '6px'}),
         ]),
         dbc.Row([
             dbc.Col([

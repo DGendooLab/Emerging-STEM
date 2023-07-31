@@ -1,15 +1,15 @@
+import dash
 from dash import html, dash_table, callback
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import io
 import csv
-from scrape_job import Scrape_Job
-from scrape_phd import Scrape_PhD
-import dash
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import base64
+from scrape_job import Scrape_Job
+from scrape_phd import Scrape_PhD
 
 
 @callback(
@@ -154,12 +154,12 @@ def build_phds_word_cloud(n_clicks, data):
     titles = [row['title'] for row in data]
 
     # Generate the word cloud
-    wordcloud = WordCloud(width=800, height=400,
+    wordcloud = WordCloud(background_color='white', width=800, height=400,
                           margin=1).generate(' '.join(titles))
 
     # Convert the word cloud image to a base64-encoded string
     image_data = io.BytesIO()
-    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.imshow(wordcloud)
     plt.axis('off')
     plt.tight_layout()
     plt.savefig(image_data, format='png')
@@ -169,7 +169,6 @@ def build_phds_word_cloud(n_clicks, data):
 
     # Create a div to display the word cloud
     word_cloud_div = html.Div([
-        html.H4('Word Cloud'),
         html.Img(src=f"data:image/png;base64,{encoded_image}")
     ])
 
@@ -198,7 +197,6 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
         'search_keywords': search_keywords,
         'academic_discipline': academic_discipline,
         'ordered_keywords': ordered_keywords,
-
     }
     # Create scrape instance
     scraper_job = Scrape_Job()
