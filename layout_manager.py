@@ -1,6 +1,6 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-from constant_manager import default_parameters_job_page, default_parameters_phd_page, academic_discipline_options, heading_job_page, heading_phd_page, funding_type_options, hours_type_options, feature1_text, feature2_text, intro_text
+from constant_manager import default_parameters_job_page, default_parameters_phd_page, academic_discipline_options, heading_job_page, heading_phd_page, funding_type_options, hours_type_options, feature1_text, feature2_text, intro_text, dev_team_text
 from app import app  # Import the app instance from app.py
 
 layout_navbar = html.Div(
@@ -83,8 +83,24 @@ layout_homepage = html.Div([
         ], className="my-4"),
         dbc.Row([
             dbc.Col([
-                dcc.Markdown(intro_text, className="lead",
-                             style={'font-size': '20px'})
+                html.H2("About Career Finder",
+                        className="text-center mb-3",
+                        style={'font-size': '24px', 'color': '#333'}),
+                dcc.Markdown(
+                    intro_text, className="lead",
+                    style={'font-size': '20px', 'margin': '20px 0'}
+                )
+            ], width={"size": 8, "offset": 2})
+        ], className="my-4"),
+        dbc.Row([
+            dbc.Col([
+                html.H2("Meet Our Team",
+                        className="text-center mb-3",
+                        style={'font-size': '24px', 'color': '#333'}),
+                dcc.Markdown(
+                    dev_team_text, className="lead",
+                    style={'font-size': '20px', 'margin': '20px 0'}
+                )
             ], width={"size": 8, "offset": 2})
         ], className="my-4"),
     ])

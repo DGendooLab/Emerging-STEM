@@ -4,13 +4,27 @@ feature2_text = "Helping you efficiently find academic job opportunities in the 
 
 # Expanded Introductory text
 intro_text = """
-Welcome to Career Finder, a web application lead by [Dr Gendoo Deena](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx), and developed by the intern team at DGengoo Lab. Career Finder is designed to be your one-stop destination for academic and research opportunities in the UK. Whether you are a student looking for Ph.D. studentships or a professional seeking academic jobs, Career Finder has got you covered.
+Welcome to Career Finder, the premier web application led by [Dr. Gendoo Deena](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx) and developed by the intern team at DGendoo Lab. Career Finder is your ultimate destination for discovering academic and research opportunities in the UK. Whether you're a student seeking Ph.D. studentships or a professional in search of academic positions, Career Finder has got you covered.
 
-Explore the word cloud generated from the latest academic listings and gain insights into the trending research areas and disciplines. Our application empowers you with an efficient and intuitive interface, making your search process seamless.
+Explore our word cloud generated from the latest academic listings and gain insights into the emerging research areas and disciplines. Our application offers an intuitive and efficient interface that streamlines your search process.
 
-Join us on [GitHub](https://github.com/DGendooLab/Emerging-STEM) to contribute to the project and improve Career Finder for the academic community.
+Join us on [GitHub](https://github.com/DGendooLab/Emerging-STEM) to contribute to the project and enhance Career Finder for the entire academic community.
 
-So, what are you waiting for? Start your journey towards a successful academic career with Career Finder!
+So, why wait? Embark on your journey towards a successful academic career with Career Finder!
+"""
+
+dev_team_text = """
+Dr. Deena Gendoo is an Associate Professor of Computational Biology at the University of Birmingham in the United Kingdom. She also serves as the Program Director for the MSc Bioinformatics program at the university.
+
+The Gendoo Lab specializes in translational bioinformatics and integrative approaches to characterizing patients and preclinical models across various cancer types and diseases. To address fundamental questions in biology and medicine, the lab employs a diverse array of machine learning, artificial intelligence methods, data science techniques, and integrative analyses of biological 'omics data and health data. This rich diversity has inspired the creation of this platform to assist individuals in exploring their career potential across these interdisciplinary fields.
+
+For more information about the Gendoo Lab and our work:
+- [University Profile](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx)
+- Twitter: @DGendoo
+- LinkedIn: [Deena Mohamad Gendoo](http://ca.linkedin.com/in/deena-mohamad-gendoo-b4979b50)
+- Google Scholar: [Deena Gendoo on Google Scholar](https://scholar.google.co.uk/citations?user=GedTo_AAAAAJ&hl=en&oi=ao)
+
+We welcome your feedback, comments, and suggestions. Feel free to reach out to Dr. Gendoo at d.gendoo@bham.ac.uk.
 """
 
 default_parameters_job_page = {
