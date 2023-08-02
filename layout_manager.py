@@ -1,6 +1,6 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-from constant_manager import default_parameters_job_page, default_parameters_phd_page, academic_discipline_options, heading_job_page, heading_phd_page, funding_type_options, hours_type_options, feature1_text, feature2_text, intro_text, dev_team_text
+from constant_manager import default_parameters_job_page, default_parameters_phd_page, academic_discipline_options, heading_job_page, heading_phd_page, funding_type_options, hours_type_options, feature1_text, feature2_text, intro_text, dev_team_text, recommended_keywords
 from app import app  # Import the app instance from app.py
 
 layout_navbar = html.Div(
@@ -123,7 +123,28 @@ layout_find_jobs = html.Div([
                     type='text',
                     style={'padding': '12px', 'width': '100%',
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
-                )
+                ),
+                html.Div([
+                    html.Div([
+                        html.Div("Recommended Search Keywords",
+                                 className="toggle-keywords"),
+                        dbc.Button(
+                            "Toggle Keywords",
+                            id="toggle-keywords-button-job",
+                            className="toggle-keywords-button",
+                            color="link",
+                        ),
+                    ], style={'display': 'flex', 'align-items': 'center'}),
+                    html.Div(
+                        id="recommended_keywords_container_job",
+                        children=[
+                            dbc.Badge(keyword, pill=True,
+                                      className='recommended-badge', style={'margin-right': '5px'})
+                            for keyword in recommended_keywords
+                        ],
+                        style={"display": "none"},  # Initially hide the badges
+                    ),
+                ]),
             ], width=6, style={'padding': '6px'}),
         ], style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'top'}),
         dbc.Row([
@@ -195,7 +216,28 @@ layout_find_phds = html.Div([
                     type='text',
                     style={'padding': '12px', 'width': '100%',
                            'text-align': 'center', 'border': '1px solid #ccc', 'border-radius': '5px'}
-                )
+                ),
+                html.Div([
+                    html.Div([
+                        html.Div("Recommended Search Keywords",
+                                 className="toggle-keywords"),
+                        dbc.Button(
+                            "Toggle Keywords",
+                            id="toggle-keywords-button-phd",
+                            className="toggle-keywords-button",
+                            color="link",
+                        ),
+                    ], style={'display': 'flex', 'align-items': 'center'}),
+                    html.Div(
+                        id="recommended_keywords_container_phd",
+                        children=[
+                            dbc.Badge(keyword, pill=True,
+                                      className='recommended-badge', style={'margin-right': '5px'})
+                            for keyword in recommended_keywords
+                        ],
+                        style={"display": "none"}, 
+                    ),
+                ]),
             ], width=6, style={'padding': '6px'}),
         ], style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'top'}),
         dbc.Row([

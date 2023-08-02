@@ -82,3 +82,28 @@ hours_type_options = [
     {"label": "Full-time", "value": "full-time"},
     {"label": "Part-time", "value": "part-time"},
 ]
+
+recommended_keywords = [
+    "Bioinformatician",
+    "Bioinformatics",
+    "Computational biologist",
+    "Computational biology",
+    "Data Scientist",
+    "Data Science",
+    "Data Analyst",
+    "Research Assistant",
+    "PhD Studentship",
+    "Biomedical",
+    "Machine learning",
+    "Biotechnology",
+    "Software",
+    "Data Coordinator",
+    "Health Informatics",
+    "Medical Informatics",
+    "Early career",
+    "Informatics",
+    "Omics",
+    "Genomic",
+    "NGS",
+    "Systems Biology"
+]

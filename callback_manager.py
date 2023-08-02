@@ -184,8 +184,8 @@ def build_phds_word_cloud(n_clicks, data):
         State("tick_boxes", "value")
      ]
 )
+# Don't bother updating if the page just opened or the button is disabled
 def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline, ordered_keywords, tick_boxes):
-    # Don't bother updating if the page just opened or the button is disabled
     if n_clicks is None or n_clicks == 0 or trigger is None:
         raise PreventUpdate
 
@@ -336,3 +336,65 @@ def build_jobs_word_cloud(n_clicks, data):
     ])
 
     return word_cloud_div
+
+
+@callback(
+    Output("recommended_keywords_container_job", "style"),
+    [Input("toggle-keywords-button-job", "n_clicks")],
+    [State("recommended_keywords_container_job", "style")]
+)
+def toggle_keywords_collapse_job(n, current_style):
+    if n:
+        display = current_style.get("display", "")
+        return {"display": "block" if display == "none" else "none"}
+    return current_style
+
+
+# @callback(
+#     Output("search_keywords", "value"),
+#     [Input("recommended_keywords_container_job", "children"),
+#      Input("find_jobs", "n_clicks")]
+# )
+# def update_search_keywords_job(recommended_badges, n_clicks):
+#     ctx = dash.callback_context
+#     triggered_by = ctx.triggered[0]["prop_id"].split(".")[0]
+
+#     if triggered_by == "recommended_keywords_container_job":
+#         recommended_keywords = [badge['props']['children']
+#                                 for badge in recommended_badges]
+#         return ", ".join(recommended_keywords)
+#     elif triggered_by == "find_jobs" and n_clicks:
+#         return dash.callback_context.states['search_keywords.value']
+#     else:
+#         return ""
+
+
+@callback(
+    Output("recommended_keywords_container_phd", "style"),
+    [Input("toggle-keywords-button-phd", "n_clicks")],
+    [State("recommended_keywords_container_phd", "style")]
+)
+def toggle_keywords_collapse_phd(n, current_style):
+    if n:
+        display = current_style.get("display", "")
+        return {"display": "block" if display == "none" else "none"}
+    return current_style
+
+
+# @callback(
+#     Output("search_keywords", "value"),
+#     [Input("recommended_keywords_container_phd", "children"),
+#      Input("find_phds", "n_clicks")]
+# )
+# def update_search_keywords_phd(recommended_badges, n_clicks):
+#     ctx = dash.callback_context
+#     triggered_by = ctx.triggered[0]["prop_id"].split(".")[0]
+
+#     if triggered_by == "recommended_keywords_container_phd":
+#         recommended_keywords = [badge['props']['children']
+#                                 for badge in recommended_badges]
+#         return ", ".join(recommended_keywords)
+#     elif triggered_by == "find_phds" and n_clicks:
+#         return dash.callback_context.states['search_keywords.value']
+#     else:
+#         return ""
