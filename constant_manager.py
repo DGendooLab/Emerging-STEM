@@ -4,13 +4,13 @@ feature2_text = "Helping you efficiently find academic job opportunities in the 
 
 # Expanded Introductory text
 intro_text = """
-Welcome to Career Finder, the premier web application led by [Dr. Gendoo Deena](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx) and developed by the intern team at DGendoo Lab. Career Finder is your ultimate destination for discovering academic and research opportunities in the UK. Whether you're a student seeking Ph.D. studentships or a professional in search of academic positions, Career Finder has got you covered.
+Welcome to the DGendooLab Career Finder, a web application led by [Dr Deena Gendoo](https://www.birmingham.ac.uk/staff/profiles/cancer-genomic/gendoo-deena.aspx), and developed by the intern team at DGendoo Lab. Career Finder is designed for our students, to be a one-stop destination for academic and research opportunities. Whether you are a student looking for Ph.D. studentships or a professional seeking academic jobs, Career Finder has got you covered.
 
-Explore our word cloud generated from the latest academic listings and gain insights into the emerging research areas and disciplines. Our application offers an intuitive and efficient interface that streamlines your search process.
+Explore the word cloud generated from the latest academic listings and gain insights into the trending research areas and disciplines. Our application empowers you with an efficient and intuitive interface, making your search process seamless.
 
-Join us on [GitHub](https://github.com/DGendooLab/Emerging-STEM) to contribute to the project and enhance Career Finder for the entire academic community.
+Join us on [GitHub](https://github.com/DGendooLab/Emerging-STEM) to contribute to the project and improve the Career Finder for the academic community.
 
-So, why wait? Embark on your journey towards a successful academic career with Career Finder!
+So, what are you waiting for? Start your journey towards a successful academic career with Career Finder!
 """
 
 dev_team_text = """
