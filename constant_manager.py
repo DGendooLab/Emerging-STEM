@@ -24,6 +24,10 @@ For more information about the Gendoo Lab and our work:
 - LinkedIn: [Deena Mohamad Gendoo](http://ca.linkedin.com/in/deena-mohamad-gendoo-b4979b50)
 - Google Scholar: [Deena Gendoo on Google Scholar](https://scholar.google.co.uk/citations?user=GedTo_AAAAAJ&hl=en&oi=ao)
 
+Intern Team:
+
+[Xiangyi Zhou](https://www.linkedin.com/in/xiangyi-zhou-code/), MSc student in Computer Science at the University of Birmingham
+
 We welcome your feedback, comments, and suggestions. Feel free to reach out to Dr. Gendoo at d.gendoo@bham.ac.uk.
 """
 
