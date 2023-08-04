@@ -91,6 +91,13 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
                         'maxWidth': '200px',  # Adjust the maximum width as needed
                     },
                 ],
+                tooltip_data=[
+                    {
+                        column: {'value': str(value), 'type': 'markdown'}
+                        for column, value in row.items()
+                    } for row in df.to_dict('records')
+                ],
+                tooltip_duration=None
             )
         ])
     ])
@@ -250,6 +257,13 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
                         'maxWidth': '200px',  # Adjust the maximum width as needed
                     },
                 ],
+                tooltip_data=[
+                    {
+                        column: {'value': str(value), 'type': 'markdown'}
+                        for column, value in row.items()
+                    } for row in df.to_dict('records')
+                ],
+                tooltip_duration=None
             )
         ])
     ])
@@ -313,15 +327,15 @@ def build_jobs_word_cloud(n_clicks, data):
     employer = [row['employer'] for row in data]
     department = [row['department'] for row in data]
     location = [row['location'] for row in data]
-    str_word_cloud = titles+employer+department+location
-
+    str_word_cloud = titles + employer + department + location
+    print(str_word_cloud)
     # Generate the word cloud
-    wordcloud = WordCloud(width=800, height=400,
+    wordcloud = WordCloud(background_color='white', width=800, height=400,
                           margin=1).generate(' '.join(str_word_cloud))
 
     # Convert the word cloud image to a base64-encoded string
     image_data = io.BytesIO()
-    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.imshow(wordcloud)
     plt.axis('off')
     plt.tight_layout()
     plt.savefig(image_data, format='png')
@@ -330,12 +344,9 @@ def build_jobs_word_cloud(n_clicks, data):
     encoded_image = base64.b64encode(image_data.getvalue()).decode('utf-8')
 
     # Create a div to display the word cloud
-    word_cloud_div = html.Div([
-        html.H4('Word Cloud'),
+    return html.Div([
         html.Img(src=f"data:image/png;base64,{encoded_image}")
     ])
-
-    return word_cloud_div
 
 
 @callback(
@@ -350,25 +361,6 @@ def toggle_keywords_collapse_job(n, current_style):
     return current_style
 
 
-# @callback(
-#     Output("search_keywords", "value"),
-#     [Input("recommended_keywords_container_job", "children"),
-#      Input("find_jobs", "n_clicks")]
-# )
-# def update_search_keywords_job(recommended_badges, n_clicks):
-#     ctx = dash.callback_context
-#     triggered_by = ctx.triggered[0]["prop_id"].split(".")[0]
-
-#     if triggered_by == "recommended_keywords_container_job":
-#         recommended_keywords = [badge['props']['children']
-#                                 for badge in recommended_badges]
-#         return ", ".join(recommended_keywords)
-#     elif triggered_by == "find_jobs" and n_clicks:
-#         return dash.callback_context.states['search_keywords.value']
-#     else:
-#         return ""
-
-
 @callback(
     Output("recommended_keywords_container_phd", "style"),
     [Input("toggle-keywords-button-phd", "n_clicks")],
@@ -379,22 +371,3 @@ def toggle_keywords_collapse_phd(n, current_style):
         display = current_style.get("display", "")
         return {"display": "block" if display == "none" else "none"}
     return current_style
-
-
-# @callback(
-#     Output("search_keywords", "value"),
-#     [Input("recommended_keywords_container_phd", "children"),
-#      Input("find_phds", "n_clicks")]
-# )
-# def update_search_keywords_phd(recommended_badges, n_clicks):
-#     ctx = dash.callback_context
-#     triggered_by = ctx.triggered[0]["prop_id"].split(".")[0]
-
-#     if triggered_by == "recommended_keywords_container_phd":
-#         recommended_keywords = [badge['props']['children']
-#                                 for badge in recommended_badges]
-#         return ", ".join(recommended_keywords)
-#     elif triggered_by == "find_phds" and n_clicks:
-#         return dash.callback_context.states['search_keywords.value']
-#     else:
-#         return ""
