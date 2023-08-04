@@ -30,6 +30,8 @@ Intern Team:
 
 [Hanqing Zhao](https://www.linkedin.com/in/hanqing-zhao-a1a88b250/), MSc student in Data Science at the University of Birmingham
 
+[Aliyu Suleiman](https://www.linkedin.com/in/ausuleiman99/), BSc student in Computer Science at the University of Birmingham
+
 We welcome your feedback, comments, and suggestions. Feel free to reach out to Dr. Gendoo at d.gendoo@bham.ac.uk.
 """
 
