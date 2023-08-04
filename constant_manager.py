@@ -28,6 +28,8 @@ Intern Team:
 
 [Xiangyi Zhou](https://www.linkedin.com/in/xiangyi-zhou-code/), MSc student in Computer Science at the University of Birmingham
 
+[Hanqing Zhao](https://www.linkedin.com/in/hanqing-zhao-a1a88b250/), MSc student in Data Science at the University of Birmingham
+
 We welcome your feedback, comments, and suggestions. Feel free to reach out to Dr. Gendoo at d.gendoo@bham.ac.uk.
 """
 
