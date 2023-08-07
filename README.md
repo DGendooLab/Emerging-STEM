@@ -21,7 +21,7 @@ One web app that allows you to search and explore PhD and Jobs listings based on
 (Layout updating is in progress, screenshots maybe out of date)
 
 - Web Interface
-  <img src="images/homepage.jpg" style="width: 80%" >
+- <img src="images/homepage.jpg" style="width: 80%" >
 
   <img src="images/web-interface-1.jpg" style="width: 80%" >
 
