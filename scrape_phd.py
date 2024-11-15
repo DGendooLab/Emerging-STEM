@@ -40,7 +40,7 @@ class Scrape_PhD:
         data = pd.DataFrame()
 
         total_phd_number_text = BeautifulSoup(requests.get(url).content, "html.parser") \
-            .select_one("#job-count h2.j-search-content__count.phd-branding").get_text(strip=True)
+            .select_one("h2.j-search-content__count.phd-branding").get_text(strip=True)
         total_phd_number = int(re.sub(r'\D', '', total_phd_number_text))
 
         print(f"[Collection] PhD data size: {total_phd_number}, collecting...")
