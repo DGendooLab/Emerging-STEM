@@ -46,6 +46,14 @@ One web app that allows you to search and explore PhD and Jobs listings based on
 - [Render](https://render.com/) - Cloud platform used for deploying and hosting the web app.
 - HTML/CSS - Markup and styling languages used for creating the user interface.
 
+## Dev Setup Documentation 
+```
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python index.py
+```
+
 ## Disclaimer
 
 This project is solely for demonstration purposes, and not intended for commercial use.
