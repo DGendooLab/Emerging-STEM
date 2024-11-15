@@ -46,9 +46,10 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
 
     # Filter data based on output_range value
     if tick_boxes == ['include']:
-        df = df[df['rating'] > 0]
-    else:
         df = df
+    else:
+        df = df[df['rating'] > 0]
+
 
     # Create a buffer to store CSV data
     csv_buffer = io.StringIO()
@@ -65,7 +66,8 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
                 data=df.to_dict('records'),
                 # columns=[{'id': c, 'name': c} for c in df.columns],
                 columns=[
-                    {'id': c, 'name': ' '.join(word.capitalize() for word in c.split('_'))}  # Capitalize words and replace underscores
+                    {'id': c, 'name': ' '.join(word.capitalize() for word in c.split('_'))} if c != 'url' else
+                    {'id': 'url', 'name': 'URL', 'presentation': 'markdown'}  # Render URL as clickable links
                     for c in df.columns
                 ],
                 style_table={'width': '100%', 'overflowX': 'auto'},
@@ -146,7 +148,7 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
                     html.I(className="fa fa-cloud", style={"margin-right": "10px"}),  # Cloud icon
                     "Build Word Cloud"
                 ],
-                className="btn btn-primary", style={'width': '30%'}),
+                className="btn btn-primary", style={'width': '30%'}, disabled=True),
                 id='build-word-cloud-phds',
             )
         ], style={'padding': '10px'}),
@@ -240,9 +242,9 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
 
     # Filter data based on output_range value
     if tick_boxes == ['include']:
-        df = df[df['rating'] > 0]
-    else:
         df = df
+    else:
+        df = df[df['rating'] > 0]
 
     # Create a buffer to store CSV data
     csv_buffer = io.StringIO()
@@ -259,7 +261,8 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
                 data=df.to_dict('records'),
                 # columns=[{'id': c, 'name': c} for c in df.columns],
                 columns=[
-                    {'id': c, 'name': ' '.join(word.capitalize() for word in c.split('_'))}  # Capitalize words and replace underscores
+                    {'id': c, 'name': ' '.join(word.capitalize() for word in c.split('_'))} if c != 'url' else
+                    {'id': 'url', 'name': 'URL', 'presentation': 'markdown'}  # Render URL as clickable links
                     for c in df.columns
                 ],
                 style_table={'width': '100%', 'overflowX': 'auto'},
@@ -307,7 +310,8 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
                 ],
                 tooltip_data=[
                     {
-                        column: {'value': str(value), 'type': 'markdown'}
+                        column: {'value': str(value), 'type': 'markdown'} if column != 'url' else
+                        {'value': value, 'type': 'text'}  # Tooltip for URL column shows raw URL
                         for column, value in row.items()
                     } for row in df.to_dict('records')
                 ],
@@ -340,10 +344,11 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
                     html.I(className="fa fa-cloud", style={"margin-right": "10px"}),  # Cloud icon
                     "Build Word Cloud"
                 ],
-                className="btn btn-primary", style={'width': '30%'}),
+                className="btn btn-primary", style={'width': '30%'}, disabled=True),
                 id='build-word-cloud-jobs',
+                
             )
-        ], style={'padding': '10px'}),
+        ], style={'padding': '10px'}), 
     ])
     return output_div
 

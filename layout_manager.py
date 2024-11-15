@@ -173,10 +173,11 @@ layout_find_jobs = html.Div([
             dbc.Col([
                 dcc.Checklist(
                     options=[
-                        {'label': 'With include keyword', 'value': 'include'},
+                        {'label': 'Include all results', 'value': 'include'},
                     ],
                     id='tick_boxes',
-                    labelStyle={'display': 'block', 'margin-left': '10px'}
+                    labelStyle={'display': 'block', 'margin-left': '10px'},
+                    inputStyle={'margin-right': '10px'}
                 ),
             ], width=6, style={'padding': '10px'}),
         ]),
@@ -185,7 +186,7 @@ layout_find_jobs = html.Div([
                 html.Button(
                 [
                     html.I(className="fa fa-search", style={"margin-right": "10px"}),  # Cloud icon
-                    "Find PhDs"
+                    "Find Jobs"
                 ], id='find_jobs',
                             className="btn btn-primary", style={'width': '100%'})
             ], width=12, style={'padding': '10px'}),
@@ -290,10 +291,12 @@ layout_find_phds = html.Div([
             dbc.Col([
                 dcc.Checklist(
                     options=[
-                        {'label': 'With include keyword', 'value': 'include'},
+                        {'label': 'Include all results', 'value': 'include'},
                     ],
                     id='tick_boxes',
-                    labelStyle={'display': 'block', 'margin-left': '10px'}
+                    labelStyle={'display': 'block', 'margin-left': '10px'},
+                    inputStyle={'margin-right': '10px'}
+
                 ),
             ], width=6, style={'padding': '10px'}),
         ]),
