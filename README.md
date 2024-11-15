@@ -2,7 +2,7 @@
 
 live version: https://dgendoolab-careerfinder.onrender.com
 
-One web app that allows you to search and explore PhD and Jobs listings based on servaral criteria, and provides analysis and visualization function based on your search result.
+One web app to search and explore PhD and job listings based on several criteria, providing analysis and visualization functions based on your search results.
 
 ## Usage
 
@@ -45,6 +45,15 @@ One web app that allows you to search and explore PhD and Jobs listings based on
 - [Gunicorn](https://gunicorn.org/#docs) - Python WSGI HTTP server for deploying the web app.
 - [Render](https://render.com/) - Cloud platform used for deploying and hosting the web app.
 - HTML/CSS - Markup and styling languages used for creating the user interface.
+
+## Dev Setup Documentation 
+```
+python -m venv venv
+source venv/bin/activate  # For Linux/Mac
+venv\Scripts\activate     # For Windows
+pip install -r requirements.txt
+python index.py
+```
 
 ## Disclaimer
 
