@@ -182,7 +182,11 @@ layout_find_jobs = html.Div([
         ]),
         dbc.Row([
             dbc.Col([
-                html.Button('Find Jobs', id='find_jobs',
+                html.Button(
+                [
+                    html.I(className="fa fa-search", style={"margin-right": "10px"}),  # Cloud icon
+                    "Find PhDs"
+                ], id='find_jobs',
                             className="btn btn-primary", style={'width': '100%'})
             ], width=12, style={'padding': '10px'}),
         ]),
@@ -295,7 +299,11 @@ layout_find_phds = html.Div([
         ]),
         dbc.Row([
             dbc.Col([
-                html.Button('Find PhDs', id='find_phds',
+                html.Button(    
+                [
+                    html.I(className="fa fa-search", style={"margin-right": "10px"}),  # Cloud icon
+                    "Find PhDs"
+                ], id='find_phds',
                             className="btn btn-primary", style={'width': '100%'})
             ], width=12, style={'padding': '10px'}),
         ]),
