@@ -84,6 +84,8 @@ class Scrape_PhD:
             })
 
             data = pd.concat([data, page_data], ignore_index=True)
+        
+        data['url'] = data['url'].apply(lambda x: f"[Link]({x})")
         print("Collection Done")
         return data
 
