@@ -63,9 +63,20 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
         html.Div(className="table-active", children=[
             dash_table.DataTable(
                 data=df.to_dict('records'),
-                columns=[{'id': c, 'name': c} for c in df.columns],
+                # columns=[{'id': c, 'name': c} for c in df.columns],
+                columns=[
+                    {'id': c, 'name': ' '.join(word.capitalize() for word in c.split('_'))}  # Capitalize words and replace underscores
+                    for c in df.columns
+                ],
                 style_table={'width': '100%', 'overflowX': 'auto'},
                 id="data_output",
+                # Bold column headers
+                style_header={
+                    'fontWeight': 'bold',
+                    'backgroundColor': '#f1f1f1',  # Optional: light background for headers
+                    'border': '1px solid #ddd',
+                    'textAlign': 'center',  # Center-align header text
+                },
                 style_cell={
                     'textAlign': 'left',
                     'fontSize': '14px',
@@ -77,6 +88,15 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
                     'height': 'auto',
                 },
                 style_data_conditional=[
+                    # Alternating row colors
+                    {
+                        'if': {'row_index': 'odd'},  # Grey background for odd rows
+                        'backgroundColor': '#f9f9f9',
+                    },
+                    {
+                        'if': {'row_index': 'even'},  # White background for even rows
+                        'backgroundColor': '#ffffff',
+                    },
                     {
                         'if': {'column_id': 'title'},
                         'height': 'auto',
@@ -104,12 +124,16 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
 
     # Div to output to results parent
     output_div = html.Div(className="row", children=[
-        html.H3('Results:'),
+        html.H3('Results'),
         results_div,
         dbc.Row(children=[
             html.A(
-                html.Button("Download data as CSV File",
-                            className="btn btn-primary", style={'width': '30%'}),
+                html.Button(
+                [
+                    html.I(className="fa fa-download", style={"margin-right": "10px"}),  # Font Awesome download icon
+                    "Download Results"
+                ],
+                className="btn btn-success", style={'width': '30%'}),
                 id='download-link',
                 href="data:text/csv;charset=utf-8," + csv_string,
                 download="phd_data.csv"
@@ -117,8 +141,12 @@ def update_phds_results(n_clicks, trigger, search_keywords, academic_discipline,
         ], style={'padding': '10px'}),
         dbc.Row(children=[
             html.A(
-                html.Button("Build Word Cloud",
-                            className="btn btn-primary", style={'width': '30%'}),
+                html.Button(
+                [
+                    html.I(className="fa fa-cloud", style={"margin-right": "10px"}),  # Cloud icon
+                    "Build Word Cloud"
+                ],
+                className="btn btn-primary", style={'width': '30%'}),
                 id='build-word-cloud-phds',
             )
         ], style={'padding': '10px'}),
@@ -229,9 +257,20 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
         html.Div(className="table-active", children=[
             dash_table.DataTable(
                 data=df.to_dict('records'),
-                columns=[{'id': c, 'name': c} for c in df.columns],
+                # columns=[{'id': c, 'name': c} for c in df.columns],
+                columns=[
+                    {'id': c, 'name': ' '.join(word.capitalize() for word in c.split('_'))}  # Capitalize words and replace underscores
+                    for c in df.columns
+                ],
                 style_table={'width': '100%', 'overflowX': 'auto'},
                 id="data_output",
+                # Bold column headers
+                style_header={
+                    'fontWeight': 'bold',
+                    'backgroundColor': '#f1f1f1',  # Optional: light background for headers
+                    'border': '1px solid #ddd',
+                    'textAlign': 'center',  # Center-align header text
+                },
                 style_cell={
                     'textAlign': 'left',
                     'fontSize': '14px',
@@ -243,6 +282,15 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
                     'height': 'auto',
                 },
                 style_data_conditional=[
+                    # Alternating row colors
+                    {
+                        'if': {'row_index': 'odd'},  # Grey background for odd rows
+                        'backgroundColor': '#f9f9f9',
+                    },
+                    {
+                        'if': {'row_index': 'even'},  # White background for even rows
+                        'backgroundColor': '#ffffff',
+                    },
                     {
                         'if': {'column_id': 'title'},
                         'height': 'auto',
@@ -270,12 +318,16 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
 
     # Div to output to results parent
     output_div = html.Div(className="row", children=[
-        html.H3('Results:'),
+        html.H3('Results'),
         results_div,
         dbc.Row(children=[
             html.A(
-                html.Button("Download data as CSV File",
-                            className="btn btn-primary", style={'width': '30%'}),
+                html.Button(
+                [
+                    html.I(className="fa fa-download", style={"margin-right": "10px"}),  # Font Awesome download icon
+                    "Download Results"
+                ],
+                className="btn btn-success", style={'width': '30%'}),
                 id='download-link',
                 href="data:text/csv;charset=utf-8," + csv_string,
                 download="job_data.csv"
@@ -283,8 +335,12 @@ def update_jobs_results(n_clicks, trigger, search_keywords, academic_discipline,
         ], style={'padding': '10px'}),
         dbc.Row(children=[
             dbc.Col(
-                html.Button("Build Word Cloud",
-                            className="btn btn-primary", style={'width': '30%'}),
+                html.Button(
+                [
+                    html.I(className="fa fa-cloud", style={"margin-right": "10px"}),  # Cloud icon
+                    "Build Word Cloud"
+                ],
+                className="btn btn-primary", style={'width': '30%'}),
                 id='build-word-cloud-jobs',
             )
         ], style={'padding': '10px'}),
