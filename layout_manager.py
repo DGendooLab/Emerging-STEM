@@ -291,7 +291,7 @@ layout_find_phds = html.Div([
             dbc.Col([
                 dcc.Checklist(
                     options=[
-                        {'label': 'Include all results', 'value': 'include'},
+                        {'label': 'Include keywords', 'value': 'include'},
                     ],
                     id='tick_boxes',
                     labelStyle={'display': 'block', 'margin-left': '10px'},
