@@ -116,7 +116,7 @@ layout_find_jobs = html.Div([
         dcc.Markdown(heading_job_page, style={'text-align': 'left'}),
         dbc.Row([
             dbc.Col([
-                html.Label('Search Keywords', style={'font-weight': 'bold'}),
+                html.Label('Search', style={'font-weight': 'bold'}),
                 dcc.Input(
                     id='search_keywords',
                     value=default_parameters_job_page['search_keywords'],
@@ -214,7 +214,7 @@ layout_find_phds = html.Div([
         dcc.Markdown(heading_phd_page, style={'text-align': 'left'}),
         dbc.Row([
             dbc.Col([
-                html.Label('Search Keywords', style={'font-weight': 'bold'}),
+                html.Label('Search', style={'font-weight': 'bold'}),
                 dcc.Input(
                     id='search_keywords',
                     value=default_parameters_phd_page['search_keywords'],
