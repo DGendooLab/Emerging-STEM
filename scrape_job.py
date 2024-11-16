@@ -85,9 +85,9 @@ class Scrape_Job:
 
             data = pd.concat([data, page_data], ignore_index=True)
 
-        data['url'] = data['url'].apply(lambda x: f"[Link]({x})")
-        print("Collection Done")
-        return data
+            data['url'] = data['url'].apply(lambda x: f"[Link]({x})")
+            print("Collection Done")
+            return data
 
     def get_scrape(self, parameters):
         base_url = self.create_url(parameters)
